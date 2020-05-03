@@ -9,7 +9,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
-
+    DatabaseHelper db;
     EditText etId,etPass,etConPass,etName,etEmail;
     Button btnLogin;
 
@@ -18,6 +18,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        db=new DatabaseHelper(this);
         etId=findViewById(R.id.etId);
         etPass=findViewById(R.id.etPass);
         etConPass=findViewById(R.id.etConPass);
@@ -38,20 +39,29 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if(name.equals("")){
                     Toast.makeText(RegisterActivity.this,"Name Required",Toast.LENGTH_SHORT).show();
-
                 }else if(id.equals("")) {
                     Toast.makeText(RegisterActivity.this, "ID Required", Toast.LENGTH_SHORT).show();
-                }else if(pass.equals("")){
-                    Toast.makeText(RegisterActivity.this,"Password Required",Toast.LENGTH_SHORT).show();
-
-                }else if(conPass.equals("")) {
-                    Toast.makeText(RegisterActivity.this,"Password Required",Toast.LENGTH_SHORT).show();
-                }else if(conPass.equals("pass")) {
-                    Toast.makeText(RegisterActivity.this,"Password missmatch",Toast.LENGTH_SHORT).show();
                 }else if(email.equals("")) {
                     Toast.makeText(RegisterActivity.this,"email Required",Toast.LENGTH_SHORT).show();
+                }else if(pass.equals("")){
+                    Toast.makeText(RegisterActivity.this,"Password Required",Toast.LENGTH_SHORT).show();
+                }else if(conPass.equals("")) {
+                    Toast.makeText(RegisterActivity.this,"Confirm Password Required",Toast.LENGTH_SHORT).show();
                 }else{
                     //Authentication
+                    if(conPass.equals(pass)) {
+                        Boolean chkid = db.chkid(id);
+                        if (chkid==true){
+                            boolean insert = db.insert(id,pass,name,email);
+                            if (insert==true){
+                                Toast.makeText(getApplicationContext(),"register successful",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(),"ID already exists",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                    else{Toast.makeText(getApplicationContext(),"Password do not match",Toast.LENGTH_SHORT).show();}
                 }
             }
         });

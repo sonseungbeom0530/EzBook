@@ -46,6 +46,19 @@
             android:textColor="@color/white"
             />
         <EditText
+            android:id="@+id/etEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:layout_marginTop="10dp"
+            android:hint="Email"
+            android:background="@drawable/edittext_background"
+            android:textColorHint="@color/white"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/white"
+            />
+
+        <EditText
             android:id="@+id/etPass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -67,18 +80,7 @@
             android:background="@drawable/edittext_background"
             android:textColor="@color/white"
             android:textColorHint="@color/white"/>
-        <EditText
-            android:id="@+id/etEmail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="14dp"
-            android:layout_marginTop="10dp"
-            android:hint="Email"
-            android:background="@drawable/edittext_background"
-            android:textColorHint="@color/white"
-            android:inputType="textEmailAddress"
-            android:textColor="@color/white"
-            />
+
 
 
         <Button
