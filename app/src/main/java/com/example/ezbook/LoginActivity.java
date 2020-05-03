@@ -15,6 +15,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText etId,etPass;
     Button btnLogin;
     TextView tvReg;
+    DatabaseHelper db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
         btnLogin=findViewById(R.id.btnLogin);
         tvReg=findViewById(R.id.tvReg);
+        db=new DatabaseHelper(this);
 
         btnLogin.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -33,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 id=etId.getText().toString();
                 pass=etPass.getText().toString();
+                boolean chkLogin = db.chkLogin(id,pass);
 
                 if(id.equals("")){
                     Toast.makeText(LoginActivity.this,"ID Required",Toast.LENGTH_SHORT).show();
@@ -41,6 +45,11 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this,"Password Required",Toast.LENGTH_SHORT).show();
                 }else{
                     //Authentication
+                    if(chkLogin==true){
+                        Toast.makeText(getApplicationContext(),"Successfully Login",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(getApplicationContext(),"Wrong ID or Password\nEnter correct ID and Password",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });

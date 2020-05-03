@@ -35,11 +35,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     //checking if id exists
-    public boolean chkid(String id){
+    public boolean chkId(String id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("Select * from user Where id=?",new String[]{id});
         if (cursor.getCount()>0) return false;
         else return true;
     }
 
+    //checking the ID and password
+    public boolean chkLogin(String id, String password ){
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("Select * from user Where id=? and password=?",new String[]{id,password});
+        if (cursor.getCount()>0) return true;
+        else return false;
+
+    }
 }

@@ -2,6 +2,7 @@ package com.example.ezbook;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
                 conPass=etConPass.getText().toString();
                 name=etName.getText().toString();
                 email=etEmail.getText().toString();
+                Intent i = new Intent(RegisterActivity.this,LoginActivity.class);
 
                 if(name.equals("")){
                     Toast.makeText(RegisterActivity.this,"Name Required",Toast.LENGTH_SHORT).show();
@@ -50,18 +52,21 @@ public class RegisterActivity extends AppCompatActivity {
                 }else{
                     //Authentication
                     if(conPass.equals(pass)) {
-                        Boolean chkid = db.chkid(id);
-                        if (chkid==true){
+                        Boolean chkId = db.chkId(id);
+                        if (chkId==true){
                             boolean insert = db.insert(id,pass,name,email);
                             if (insert==true){
                                 Toast.makeText(getApplicationContext(),"register successful",Toast.LENGTH_SHORT).show();
+                                startActivity(i);
                             }
                         }
                         else{
                             Toast.makeText(getApplicationContext(),"ID already exists",Toast.LENGTH_SHORT).show();
                         }
                     }
-                    else{Toast.makeText(getApplicationContext(),"Password do not match",Toast.LENGTH_SHORT).show();}
+                    else{
+                        Toast.makeText(getApplicationContext(),"Password do not match",Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
