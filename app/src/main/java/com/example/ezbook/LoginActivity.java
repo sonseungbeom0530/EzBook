@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
                 id=etId.getText().toString();
                 pass=etPass.getText().toString();
                 boolean chkLogin = db.chkLogin(id,pass);
+                Intent i = new Intent(LoginActivity.this,MainActivity.class);
 
                 if(id.equals("")){
                     Toast.makeText(LoginActivity.this,"ID Required",Toast.LENGTH_SHORT).show();
@@ -47,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
                     //Authentication
                     if(chkLogin==true){
                         Toast.makeText(getApplicationContext(),"Successfully Login",Toast.LENGTH_SHORT).show();
+                        startActivity(i);
                     }else{
                         Toast.makeText(getApplicationContext(),"Wrong ID or Password\nEnter correct ID and Password",Toast.LENGTH_SHORT).show();
                     }
