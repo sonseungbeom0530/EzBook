@@ -56,6 +56,7 @@
                 android:columnOrderPreserved="false">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/bookstore_card"
                     android:layout_width="165dp"
                     android:layout_height="165dp"
                     android:layout_margin="10dp"
@@ -86,7 +87,9 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/second_hand_book_card"
                     android:layout_width="165dp"
                     android:layout_height="165dp"
                     android:layout_margin="10dp"
@@ -117,7 +120,9 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/library_card"
                     android:layout_width="165dp"
                     android:layout_height="165dp"
                     android:layout_margin="10dp"
@@ -148,7 +153,9 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/ebook_card"
                     android:layout_width="165dp"
                     android:layout_height="165dp"
                     android:layout_margin="10dp"
@@ -179,7 +186,9 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/chat_card"
                     android:layout_width="165dp"
                     android:layout_height="165dp"
                     android:layout_margin="10dp"
@@ -210,7 +219,9 @@
                     </LinearLayout>
 
                 </androidx.cardview.widget.CardView>
+
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/profile_card"
                     android:layout_width="165dp"
                     android:layout_height="165dp"
                     android:layout_margin="10dp"

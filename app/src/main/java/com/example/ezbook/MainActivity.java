@@ -1,21 +1,26 @@
 package com.example.ezbook;
 
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.cardview.widget.CardView;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
+    CardView bookstoreCard,secondHandBookCard,libraryCard,eBookCard,chatCard,profileCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +39,23 @@ public class MainActivity extends AppCompatActivity {
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+
+        //defining card
+        bookstoreCard=(CardView)findViewById(R.id.bookstore_card);
+        secondHandBookCard=(CardView)findViewById(R.id.second_hand_book_card);
+        libraryCard=(CardView)findViewById(R.id.library_card);
+        eBookCard=(CardView)findViewById(R.id.ebook_card);
+        chatCard=(CardView)findViewById(R.id.chat_card);
+        profileCard=(CardView)findViewById(R.id.profile_card);
+
+        //Add click listener to the cards
+        bookstoreCard.setOnClickListener(this);
+        secondHandBookCard.setOnClickListener(this);
+        libraryCard.setOnClickListener(this);
+        eBookCard.setOnClickListener(this);
+        chatCard.setOnClickListener(this);
+        profileCard.setOnClickListener(this);
+
     }
 
     @Override
@@ -43,6 +65,18 @@ public class MainActivity extends AppCompatActivity {
         }else{
             super.onBackPressed();
         }
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent i;
+
+        switch (v.getId()){
+            case R.id.library_card : i = new Intent(this,LibraryActivity.class);startActivity(i); break;
+            default:break;
+        }
+
 
     }
 }
