@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "302286928169",
+    "firebase_url": "https://ezbook-9b9d9.firebaseio.com",
+    "project_id": "ezbook-9b9d9",
+    "storage_bucket": "ezbook-9b9d9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302286928169:android:ec6d8d64ac25cb59f1df38",
+        "android_client_info": {
+          "package_name": "com.example.ezbook"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302286928169-1as5nq17dlkf3qru8n48efjb434o7a33.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ezbook",
+            "certificate_hash": "902e83c034f20e708b6ac2613dfde3c212ce0780"
+          }
+        },
+        {
+          "client_id": "302286928169-c05biti5nvgq2vrlf89n64ckcfob67j1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD5VRf_v9mp75Jzd431JpDVHeZESntQb1Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302286928169-c05biti5nvgq2vrlf89n64ckcfob67j1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
