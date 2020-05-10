@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         switch (v.getId()){
             case R.id.library_card : i = new Intent(this,LibraryActivity.class);startActivity(i); break;
+            case R.id.profile_card : i = new Intent(this,UserProfileActivity.class);startActivity(i); break;
             default:break;
         }
 
