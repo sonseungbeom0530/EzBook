@@ -3,6 +3,7 @@ package com.example.ezbook;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,29 +12,23 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterAdminActivity extends AppCompatActivity {
 
     EditText etPhone,etPass,etConPass,etName,etEmail;
     Button btnReg;
-    ProgressDialog loadingBar;
-    TextView regAdmin;
+    private String[] storagePermission;
+
     FirebaseAuth firebaseAuth;
     ProgressDialog progressDialog;
 
@@ -41,8 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
-
+        setContentView(R.layout.activity_register_admin);
 
         etPhone=findViewById(R.id.etPhone);
         etPass=findViewById(R.id.etPass);
@@ -50,21 +44,15 @@ public class RegisterActivity extends AppCompatActivity {
         etEmail=findViewById(R.id.etEmail);
         etName=findViewById(R.id.etName);
         btnReg=findViewById(R.id.btnReg);
-        regAdmin=findViewById(R.id.registerAdmin);
-        loadingBar=new ProgressDialog(this);
-        firebaseAuth = FirebaseAuth.getInstance();
+
+        //init permission arrays
+        storagePermission=new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        firebaseAuth=FirebaseAuth.getInstance();
         progressDialog=new ProgressDialog(this);
-        progressDialog.setTitle("Please wait");
+        progressDialog.setTitle("please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
-        regAdmin.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                //open register admin activity
-                startActivity(new Intent(RegisterActivity.this,RegisterAdminActivity.class));
-
-            }
-        });
         btnReg.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
@@ -73,7 +61,6 @@ public class RegisterActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     private String name,email,password,confirmPassword,phone;
@@ -106,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(this,"Enter phone number",Toast.LENGTH_SHORT).show();
             return;
         }
-
+        
         createAccount();
     }
 
@@ -128,7 +115,7 @@ public class RegisterActivity extends AppCompatActivity {
                     public void onFailure(@NonNull Exception e) {
                         //failed creating account
                         progressDialog.dismiss();
-                        Toast.makeText(RegisterActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterAdminActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -146,31 +133,30 @@ public class RegisterActivity extends AppCompatActivity {
         hashMap.put("password",""+password);
         hashMap.put("phone",""+phone);
         hashMap.put("timestamp",""+timestamp);
-        hashMap.put("accountType","User");
+        hashMap.put("accountType","Admin");
         hashMap.put("online","true");
 
         //save to db
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(firebaseAuth.getUid()).setValue(hashMap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        //db updated
-                        progressDialog.dismiss();
-                        startActivity(new Intent(RegisterActivity.this,MainActivity.class));
-                        finish();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        //failed updating db
-                        progressDialog.dismiss();
-                        startActivity(new Intent(RegisterActivity.this,MainActivity.class));
-                        finish();
-                    }
-                });
+            @Override
+            public void onSuccess(Void aVoid) {
+                //db updated
+                progressDialog.dismiss();
+                startActivity(new Intent(RegisterAdminActivity.this,AdminMainActivity.class));
+                finish();
+            }
+        })
+               .addOnFailureListener(new OnFailureListener() {
+                   @Override
+                   public void onFailure(@NonNull Exception e) {
+                      //failed updating db
+                       progressDialog.dismiss();
+                       startActivity(new Intent(RegisterAdminActivity.this,AdminMainActivity.class));
+                       finish();
+                   }
+               });
     }
-
 
 }

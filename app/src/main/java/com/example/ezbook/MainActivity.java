@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    CardView bookstoreCard,secondHandBookCard,libraryCard,eBookCard,chatCard,profileCard;
+    CardView bookstoreCard,secondHandBookCard,libraryCard,eBookCard,chatCard,profileCard,logoutCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         eBookCard=(CardView)findViewById(R.id.ebook_card);
         chatCard=(CardView)findViewById(R.id.chat_card);
         profileCard=(CardView)findViewById(R.id.profile_card);
+        logoutCard=(CardView)findViewById(R.id.logout_card);
 
         //Add click listener to the cards
         bookstoreCard.setOnClickListener(this);
@@ -75,6 +76,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.library_card : i = new Intent(this,LibraryActivity.class);startActivity(i); break;
             case R.id.profile_card : i = new Intent(this,UserProfileActivity.class);startActivity(i); break;
+            case R.id.logout_card : i = new Intent(this,LoginActivity.class);startActivity(i); break;
             default:break;
         }
 
