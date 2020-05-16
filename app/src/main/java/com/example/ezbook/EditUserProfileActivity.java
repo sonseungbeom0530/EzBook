@@ -28,10 +28,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 
 
-public class UserProfileActivity extends AppCompatActivity {
+public class EditUserProfileActivity extends AppCompatActivity {
 
-    TextView tvName, tvPhone, tvPassword, tvEmail, tvAccountType;
-
+    //TextView tvName, tvPhone, tvPassword, tvEmail, tvAccountType;
+    TextView tvAccountType;
+    EditText etPhone,etName,etPassword,etEmail;
     ImageButton backBtn,editBtn;
     FirebaseAuth firebaseAuth;
     ProgressDialog progressDialog;
@@ -44,10 +45,10 @@ public class UserProfileActivity extends AppCompatActivity {
 
         firebaseAuth=FirebaseAuth.getInstance();
 
-        tvPhone = findViewById(R.id.tvPhone);
-        tvName = findViewById(R.id.tvName);
-        tvPassword = findViewById(R.id.tvPassword);
-        tvEmail = findViewById(R.id.tvEmail);
+        etPhone = findViewById(R.id.etPhone);
+        etName = findViewById(R.id.etName);
+        etPassword = findViewById(R.id.etPassword);
+        etEmail = findViewById(R.id.etEmail);
         tvAccountType = findViewById(R.id.tvAccountType);
         backBtn=findViewById(R.id.backBtn);
         editBtn=findViewById(R.id.editBtn);
@@ -69,19 +70,58 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 //open edit profile activity
-                startActivity(new Intent(UserProfileActivity.this,EditUserProfileActivity.class ));
-
+                //startActivity(new Intent(UserProfileActivity.this,EditUserProfileActivity.class ));
+                inputData();
             }
         });
 
 
 
     }
+    private String aName,aPassword,aEmail,aPhone;
+    private void inputData() {
+        aName=etName.getText().toString().trim();
+        aPassword=etPassword.getText().toString().trim();
+        aEmail=etEmail.getText().toString().trim();
+        aPhone=etPhone.getText().toString().trim();
+        updateProfile();
 
+    }
+    private void updateProfile() {
+        progressDialog.setMessage("updating profile");
+        progressDialog.show();
+
+        HashMap<String,Object> hashMap=new HashMap<>();
+        hashMap.put("email",""+aEmail);
+        hashMap.put("name",""+aName);
+        hashMap.put("password",""+aPassword);
+        hashMap.put("phone",""+aPhone);
+
+        //update to db
+        DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //updated
+                        progressDialog.dismiss();
+                        Toast.makeText(EditUserProfileActivity.this,"Profile updated.",Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        //failed to update
+                        progressDialog.dismiss();
+                        Toast.makeText(EditUserProfileActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
     private void checkUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
         if(user==null){
-            startActivity(new Intent (UserProfileActivity.this,LoginActivity.class));
+            startActivity(new Intent (EditUserProfileActivity.this,LoginActivity.class));
         }else{
             loadMyInfo();
         }
@@ -101,10 +141,10 @@ public class UserProfileActivity extends AppCompatActivity {
                             String email=""+ds.child("email").getValue();
                             String phone=""+ds.child("phone").getValue();
 
-                            tvName.setText(name);
-                            tvEmail.setText(email);
-                            tvPassword.setText(password);
-                            tvPhone.setText(phone);
+                            etName.setText(name);
+                            etEmail.setText(email);
+                            etPassword.setText(password);
+                            etPhone.setText(phone);
                             tvAccountType.setText(accountType);
 
                         }

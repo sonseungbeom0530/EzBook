@@ -49,17 +49,17 @@
             android:inputType="textPersonName"
             android:textColor="@color/white"
             />
+
         <EditText
             android:id="@+id/etPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14dp"
             android:layout_marginTop="10dp"
-            android:hint="ID"
             android:background="@drawable/edittext_background"
-            android:textColorHint="@color/white"
+            android:hint="Phone"
             android:textColor="@color/white"
-            />
+            android:textColorHint="@color/white"
+            android:textSize="14dp" />
 
 
         <EditText

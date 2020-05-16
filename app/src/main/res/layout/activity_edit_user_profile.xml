@@ -46,8 +46,8 @@
         android:layout_centerHorizontal="true">
 
 
-        <TextView
-            android:id="@+id/tvEmail"
+        <EditText
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
@@ -57,8 +57,8 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="14dp" />
-        <TextView
-            android:id="@+id/tvPassword"
+        <EditText
+            android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
@@ -68,8 +68,8 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="14dp" />
-        <TextView
-            android:id="@+id/tvName"
+        <EditText
+            android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
@@ -79,8 +79,8 @@
             android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:textSize="14dp" />
-        <TextView
-            android:id="@+id/tvPhone"
+        <EditText
+            android:id="@+id/etPhone"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="10dp"
