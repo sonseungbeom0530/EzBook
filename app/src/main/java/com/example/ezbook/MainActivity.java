@@ -1,21 +1,39 @@
 package com.example.ezbook;
 
 
+
+
+
 import android.content.Intent;
+
 import android.os.Bundle;
+
 import android.view.View;
 
 
+
+
+
 import androidx.appcompat.app.ActionBarDrawerToggle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.appcompat.widget.Toolbar;
+
 import androidx.cardview.widget.CardView;
+
 import androidx.core.view.GravityCompat;
+
 import androidx.drawerlayout.widget.DrawerLayout;
+
+
 
 import com.google.android.material.navigation.NavigationView;
 
+
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+
 
     DrawerLayout drawerLayout;
     NavigationView navigationView;
@@ -40,6 +58,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
+
+
         //defining card
         bookstoreCard=(CardView)findViewById(R.id.bookstore_card);
         secondHandBookCard=(CardView)findViewById(R.id.second_hand_book_card);
@@ -49,6 +69,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         profileCard=(CardView)findViewById(R.id.profile_card);
         logoutCard=(CardView)findViewById(R.id.logout_card);
 
+
+
         //Add click listener to the cards
         bookstoreCard.setOnClickListener(this);
         secondHandBookCard.setOnClickListener(this);
@@ -57,7 +79,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         chatCard.setOnClickListener(this);
         profileCard.setOnClickListener(this);
 
+
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -66,20 +91,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }else{
             super.onBackPressed();
         }
-
     }
+
+
 
     @Override
     public void onClick(View v) {
         Intent i;
-
         switch (v.getId()){
             case R.id.library_card : i = new Intent(this,LibraryActivity.class);startActivity(i); break;
             case R.id.profile_card : i = new Intent(this,UserProfileActivity.class);startActivity(i); break;
             case R.id.logout_card : i = new Intent(this,LoginActivity.class);startActivity(i); break;
             default:break;
+
         }
 
 
+
+
+
     }
+
 }

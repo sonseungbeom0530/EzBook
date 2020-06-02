@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <RelativeLayout
+
     xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
+
     android:layout_height="match_parent"
+
     android:background="@color/purple"
+
     android:gravity="center"
+
     tools:context=".RegisterActivity">
 
+
+
     <LinearLayout
+
         android:layout_width="250dp"
+
         android:layout_height="wrap_content"
+
         android:orientation="vertical">
+
+
 
         <TextView
             android:layout_width="match_parent"
@@ -50,6 +66,8 @@
             android:textColor="@color/white"
             />
 
+
+
         <EditText
             android:id="@+id/etPhone"
             android:layout_width="match_parent"
@@ -61,56 +79,105 @@
             android:textColorHint="@color/white"
             android:textSize="14dp" />
 
-
         <EditText
             android:id="@+id/etPass"
+
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
+
             android:layout_marginTop="10dp"
+
             android:textSize="14dp"
+
             android:hint="Password"
+
             android:inputType="textPassword"
+
             android:background="@drawable/edittext_background"
+
             android:textColor="@color/white"
+
             android:textColorHint="@color/white"/>
+
         <EditText
+
             android:id="@+id/etConPass"
+
             android:layout_width="match_parent"
+
             android:layout_height="wrap_content"
+
             android:layout_marginTop="10dp"
+
             android:textSize="14dp"
+
             android:hint="Confirm Password"
+
             android:inputType="textPassword"
+
             android:background="@drawable/edittext_background"
+
             android:textColor="@color/white"
+
             android:textColorHint="@color/white"/>
+
+
+
+
 
 
 
         <Button
+
             android:id="@+id/btnReg"
+
             android:layout_width="180dp"
+
             android:layout_height="wrap_content"
+
             android:textColor="@color/white"
+
             android:background="@drawable/btn_login"
+
             android:textSize="14dp"
+
             android:text="Register"
+
             android:textAllCaps="false"
+
             android:layout_gravity="center"
+
             android:layout_marginTop="10dp"
+
             android:textStyle="bold"
+
             android:stateListAnimator="@null"/>
 
+
+
         <TextView
+
             android:id="@+id/registerAdmin"
+
             android:layout_width="wrap_content"
+
             android:layout_height="wrap_content"
+
             android:layout_marginTop="10dp"
+
             android:layout_marginLeft="10dp"
+
             android:text="Are you a Admin? Register as Admin"
+
             android:textColor="@color/white" />
 
 
+
+
+
     </LinearLayout>
+
+
 
 </RelativeLayout>

@@ -14,17 +14,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".EditUserProfileActivity"></activity>
-        <activity android:name=".RegisterAdminActivity" />
+        <activity android:name=".EditUserProfileActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" /> <!-- start from login -->
+
             </intent-filter>
         </activity>
-        <activity android:name=".AdminAddProductActivity" />
-        <activity android:name=".AdminMainActivity" />
         <activity android:name=".LibraryActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegisterActivity" />
