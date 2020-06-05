@@ -240,7 +240,7 @@ public class LoginActivity extends AppCompatActivity {
 
                     public void onSuccess(AuthResult authResult) {
                         //logged in successfully
-                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        makeMeOnline();
 
                     }
 
@@ -279,7 +279,6 @@ public class LoginActivity extends AppCompatActivity {
     }
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
 
-
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -288,6 +287,34 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                             FirebaseUser user = firebaseAuth.getCurrentUser();
+
+                            //if user is signing in first time then get and show user info from google account
+                            if(task.getResult().getAdditionalUserInfo().isNewUser()) {
+                                //get user email and uid from auth
+                                String email = user.getEmail();
+                                String uid = user.getUid();
+                                //when user is registered store user info in firebase realtime database too
+                                //using HashMap
+                                HashMap<Object, String> hashMap = new HashMap<>();
+                                //put info in hashmap
+                                hashMap.put("uid", "" + uid);
+                                hashMap.put("email", "" + email);
+                                hashMap.put("name", "");
+                                hashMap.put("password", "");
+                                hashMap.put("phone", "");
+                                hashMap.put("timestamp", "");
+                                hashMap.put("accountType", "User");
+                                hashMap.put("online", "true");
+                                hashMap.put("image", "");
+                                hashMap.put("cover","");
+                                //firebase database instance
+                                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                                //path to store user data named "Users"
+                                DatabaseReference reference = database.getReference("Users");
+                                //put data within hashmap in database
+                                reference.child(uid).setValue(hashMap);
+                            }
+
                             //show user email in toast
                             Toast.makeText(LoginActivity.this,""+user.getEmail(),Toast.LENGTH_SHORT).show();
                             //go to main activity after login
@@ -311,81 +338,33 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-
-    /*private void makeMeOnline() {
-
+    private void makeMeOnline() {
         //after logging in, make user online
-
         progressDialog.setMessage("Checking user...");
-
         HashMap<String,Object>hashMap = new HashMap<>();
         hashMap.put("online","true");
 
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(firebaseAuth.getUid()).updateChildren(hashMap)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
-
                     @Override
-
                     public void onSuccess(Void aVoid) {
                         //update successfully
-                        checkUserType();
+                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
                     }
-
                 })
                 .addOnFailureListener(new OnFailureListener() {
-
                     @Override
-
                     public void onFailure(@NonNull Exception e) {
                         //failed updating
                         progressDialog.dismiss();
                         Toast.makeText(LoginActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
 
                     }
-
                 });
-
     }
 
-    private void checkUserType() {
 
-        //if user is seller, start seller main screen
-        //if user is buyer, start user main screen
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
-        ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot ds : dataSnapshot.getChildren()){
-                            String accountType = ""+ds.child("accountType").getValue();
-
-                            //if(accountType.equals("Admin")){
-
-                               // progressDialog.dismiss();
-
-                                //user is admin
-
-                                //startActivity(new Intent (LoginActivity.this,AdminMainActivity.class));
-
-                                //finish();
-
-                            //}else{
-                                progressDialog.dismiss();
-                                //users is customer
-                                startActivity(new Intent(LoginActivity.this,MainActivity.class));
-                                finish();
-                            }
-
-                        }
-
-                    //}
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
-    }*/
 
 }
 

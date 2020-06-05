@@ -193,6 +193,8 @@ public class RegisterActivity extends AppCompatActivity {
         hashMap.put("timestamp",""+timestamp);
         hashMap.put("accountType","User");
         hashMap.put("online","true");
+        hashMap.put("image","");
+        hashMap.put("cover","");
         //save to db
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(firebaseAuth.getUid()).setValue(hashMap)

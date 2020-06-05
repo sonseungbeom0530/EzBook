@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
-
     tools:context=".UserProfileActivity">
-
 
     <RelativeLayout
         android:id="@+id/toolbar"
@@ -21,189 +14,182 @@
         android:background="@color/purple">
 
         <ImageButton
-
             android:id="@+id/backBtn"
-
             android:layout_width="30dp"
-
             android:layout_height="30dp"
-
             android:src="@drawable/ic_back"
-
             android:background="@null"/>
-
-
 
         <TextView
-
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-
             android:layout_centerHorizontal="true"
-
             android:text="My profile"
-
             android:textStyle="bold"
-
             android:textSize="20dp"
-
             android:textColor="@color/white"
-
             android:layout_marginTop="20dp"/>
-
         <ImageButton
-
             android:id="@+id/editBtn"
-
             android:layout_width="30dp"
-
             android:layout_height="30dp"
-
             android:src="@drawable/ic_edit"
-
             android:layout_alignParentEnd="true"
-
             android:background="@null"/>
-
     </RelativeLayout>
 
-
-
     <LinearLayout
-
         android:layout_width="250dp"
-
         android:layout_height="wrap_content"
-
         android:orientation="vertical"
-
         android:layout_below="@id/toolbar"
-
         android:layout_centerHorizontal="true">
 
 
-
-
-
         <TextView
-
             android:id="@+id/tvEmail"
-
             android:layout_width="match_parent"
-
             android:layout_height="40dp"
-
             android:layout_marginTop="10dp"
-
             android:background="@color/gray"
-
             android:paddingTop="10dp"
-
             android:hint="Email"
-
             android:textColor="@color/white"
-
             android:textColorHint="@color/white"
-
             android:textSize="14dp" />
-
         <TextView
-
             android:id="@+id/tvPassword"
-
             android:layout_width="match_parent"
-
             android:layout_height="40dp"
-
             android:layout_marginTop="10dp"
-
             android:background="@color/gray"
-
             android:paddingTop="10dp"
-
             android:hint="Password"
-
             android:textColor="@color/white"
-
             android:textColorHint="@color/white"
-
             android:textSize="14dp" />
-
         <TextView
-
             android:id="@+id/tvName"
-
             android:layout_width="match_parent"
-
             android:layout_height="40dp"
-
             android:layout_marginTop="10dp"
-
             android:background="@color/gray"
-
             android:paddingTop="10dp"
-
             android:hint="Name"
-
             android:textColor="@color/white"
-
             android:textColorHint="@color/white"
-
             android:textSize="14dp" />
-
         <TextView
-
             android:id="@+id/tvPhone"
-
             android:layout_width="match_parent"
-
             android:layout_height="40dp"
-
             android:layout_marginTop="10dp"
-
             android:background="@color/gray"
-
             android:paddingTop="10dp"
-
             android:hint="Phone Number"
-
             android:textColor="@color/white"
-
             android:textColorHint="@color/white"
-
             android:textSize="14dp" />
-
         <TextView
-
             android:id="@+id/tvAccountType"
-
             android:layout_width="match_parent"
-
             android:layout_height="40dp"
-
             android:layout_marginTop="10dp"
-
             android:background="@color/gray"
-
             android:paddingTop="10dp"
-
             android:hint="accountType"
-
             android:textColor="@color/white"
-
             android:textColorHint="@color/white"
-
             android:textSize="14dp" />
-
-
-
 
 
     </LinearLayout>
 
 
-
-
-
 </RelativeLayout>
+
+<!--<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".UserProfileActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:background="@color/purple">
+            <ImageButton
+                android:id="@+id/editBtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_edit"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentEnd="true"
+                android:background="@null"/>
+
+        </RelativeLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="120dp">
+
+            <ImageView
+                android:id="@+id/avatarIv"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@drawable/ic_add_image"
+                android:layout_marginStart="20dp"
+                android:padding="5dp"
+                android:layout_marginLeft="20dp"
+                android:background="@color/gray"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nameTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="Name"
+                    android:textSize="25sp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/white"
+                android:layout_marginLeft="5dp"/>
+
+                <TextView
+                    android:id="@+id/emailTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:text="Email"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/phoneTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="phone"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="5dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+
+</ScrollView>-->

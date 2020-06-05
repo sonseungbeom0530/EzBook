@@ -1,215 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
-
     xmlns:tools="http://schemas.android.com/tools"
-
     android:layout_width="match_parent"
-
     android:layout_height="match_parent"
-
-    tools:context=".UserProfileActivity">
-
-
+    tools:context=".EditProfileActivity">
 
     <RelativeLayout
-
         android:id="@+id/toolbar"
-
         android:layout_width="match_parent"
-
         android:layout_height="80dp"
-
         android:padding="10dp"
-
         android:background="@color/purple">
 
-
-
         <ImageButton
-
             android:id="@+id/backBtn"
-
             android:layout_width="30dp"
-
             android:layout_height="30dp"
-
             android:src="@drawable/ic_back"
-
             android:background="@null"/>
-
-
 
         <TextView
-
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-
             android:layout_centerHorizontal="true"
-
             android:text="My profile"
-
             android:textStyle="bold"
-
             android:textSize="20dp"
-
             android:textColor="@color/white"
-
             android:layout_marginTop="20dp"/>
-
-        <ImageButton
-
-            android:id="@+id/editBtn"
-
-            android:layout_width="30dp"
-
-            android:layout_height="30dp"
-
-            android:src="@drawable/ic_edit"
-
-            android:layout_alignParentEnd="true"
-
-            android:background="@null"/>
 
     </RelativeLayout>
 
-
-
     <LinearLayout
-
         android:layout_width="250dp"
-
         android:layout_height="wrap_content"
-
         android:orientation="vertical"
-
         android:layout_below="@id/toolbar"
-
         android:layout_centerHorizontal="true">
 
 
-
-
-
-        <EditText
-
-            android:id="@+id/etEmail"
-
-            android:layout_width="match_parent"
-
-            android:layout_height="40dp"
-
-            android:layout_marginTop="10dp"
-
-            android:background="@color/gray"
-
-            android:paddingTop="10dp"
-
-            android:hint="Email"
-
-            android:textColor="@color/white"
-
-            android:textColorHint="@color/white"
-
-            android:textSize="14dp" />
-
-        <EditText
-
-            android:id="@+id/etPassword"
-
-            android:layout_width="match_parent"
-
-            android:layout_height="40dp"
-
-            android:layout_marginTop="10dp"
-
-            android:background="@color/gray"
-
-            android:paddingTop="10dp"
-
-            android:hint="Password"
-
-            android:textColor="@color/white"
-
-            android:textColorHint="@color/white"
-
-            android:textSize="14dp" />
-
-        <EditText
-
-            android:id="@+id/etName"
-
-            android:layout_width="match_parent"
-
-            android:layout_height="40dp"
-
-            android:layout_marginTop="10dp"
-
-            android:background="@color/gray"
-
-            android:paddingTop="10dp"
-
-            android:hint="Name"
-
-            android:textColor="@color/white"
-
-            android:textColorHint="@color/white"
-
-            android:textSize="14dp" />
-
-        <EditText
-
-            android:id="@+id/etPhone"
-
-            android:layout_width="match_parent"
-
-            android:layout_height="40dp"
-
-            android:layout_marginTop="10dp"
-
-            android:background="@color/gray"
-
-            android:paddingTop="10dp"
-
-            android:hint="Phone Number"
-
-            android:textColor="@color/white"
-
-            android:textColorHint="@color/white"
-
-            android:textSize="14dp" />
-
         <TextView
-
-            android:id="@+id/tvAccountType"
-
+            android:id="@+id/etEmail"
             android:layout_width="match_parent"
-
             android:layout_height="40dp"
-
             android:layout_marginTop="10dp"
-
             android:background="@color/gray"
-
             android:paddingTop="10dp"
-
-            android:hint="accountType"
-
+            android:hint="Email"
             android:textColor="@color/white"
-
             android:textColorHint="@color/white"
-
+            android:textSize="14dp" />
+        <TextView
+            android:id="@+id/etPassword"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray"
+            android:paddingTop="10dp"
+            android:hint="Password"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="14dp" />
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray"
+            android:paddingTop="10dp"
+            android:hint="Name"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="14dp" />
+        <EditText
+            android:id="@+id/etPhone"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray"
+            android:paddingTop="10dp"
+            android:hint="Phone Number"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="14dp" />
+        <TextView
+            android:id="@+id/tvAccountType"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/gray"
+            android:paddingTop="10dp"
+            android:hint="accountType"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
             android:textSize="14dp" />
 
-
-
-
-
+        <Button
+            android:id="@+id/modifyBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Modify"
+            android:background="@color/purple"
+            android:layout_below="@id/tvAccountType"
+            android:layout_marginTop="10dp"
+            android:padding="5dp"
+            android:layout_marginLeft="75dp"
+            />
     </LinearLayout>
-
 
 
 
