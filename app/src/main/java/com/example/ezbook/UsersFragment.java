@@ -18,6 +18,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 
+import com.example.ezbook.Adapters.AdapterUsers;
+import com.example.ezbook.Models.ModelUser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -115,7 +117,7 @@ public class UsersFragment extends Fragment {
                                 modelUser.getEmail().toLowerCase().contains(query.toLowerCase())){
                             userList.add(modelUser);
                         }
-                      
+
                     }
                     //adapter
                     adapterUsers=new AdapterUsers(getActivity(),userList);

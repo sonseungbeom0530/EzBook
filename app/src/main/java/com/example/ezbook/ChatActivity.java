@@ -1,74 +1,51 @@
 package com.example.ezbook;
 
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class ChatActivity extends AppCompatActivity {
 
-    //firebase auth
-    FirebaseAuth firebaseAuth;
-
-    //views
-
+    //views from xml
+    Toolbar toolbar;
+    RecyclerView recyclerView;
+    ImageView profileIv;
+    TextView nameTv,userStatusTv;
+    EditText messageEt;
+    ImageButton sendBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
-        //init
-        firebaseAuth=FirebaseAuth.getInstance();
+        //init views
+        Toolbar toolbar =findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setTitle("");
 
-        //bottom navigation
-        BottomNavigationView navigationView = findViewById(R.id.navigation);
-        navigationView.setOnNavigationItemSelectedListener(selectedListener);
-
-        //home fragment transaction(default, on star)
-        HomeFragment fragment1 = new HomeFragment();
-        FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
-        ft1.replace(R.id.content,fragment1,"");
-        ft1.commit();
+        recyclerView=findViewById(R.id.chat_recyclerView);
+        profileIv=findViewById(R.id.profileIv);
+        nameTv=findViewById(R.id.nameTv);
+        userStatusTv=findViewById(R.id.userStatusTv);
+        messageEt=findViewById(R.id.messageEt);
+        sendBtn=findViewById(R.id.sendBtn);
 
 
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener selectedListener =
-            new BottomNavigationView.OnNavigationItemSelectedListener() {
-                @Override
-                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                    //handle item clicks
-                    switch ((menuItem.getItemId())){
-                        case R.id.nav_home:
-                        //home fragment transaction
-                            HomeFragment fragment1 = new HomeFragment();
-                            FragmentTransaction ft1 = getSupportFragmentManager().beginTransaction();
-                            ft1.replace(R.id.content,fragment1,"");
-                            ft1.commit();
-                            return true;
-                        case R.id.nav_profile:
-                            //profile fragment transaction
-                            ProfileFragment fragment2 = new ProfileFragment();
-                            FragmentTransaction ft2 = getSupportFragmentManager().beginTransaction();
-                            ft2.replace(R.id.content,fragment2,"");
-                            ft2.commit();
-                            return true;
-                        case R.id.nav_users:
-                            //users fragment transaction
-                            UsersFragment fragment3 = new UsersFragment();
-                            FragmentTransaction ft3 = getSupportFragmentManager().beginTransaction();
-                            ft3.replace(R.id.content,fragment3,"");
-                            ft3.commit();
-                            return true;
-                    }
-                    return false;
-                }
-            };
+
 }

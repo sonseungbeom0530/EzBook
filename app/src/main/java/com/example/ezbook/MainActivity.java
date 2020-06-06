@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             case R.id.logout_card : i = new Intent(this,LoginActivity.class);startActivity(i); break;
 
-            case R.id.chat_card : i = new Intent(this,ChatActivity.class);startActivity(i); break;
+            case R.id.chat_card : i = new Intent(this,ChatDashboardActivity.class);startActivity(i); break;
 
             default:break;
 
