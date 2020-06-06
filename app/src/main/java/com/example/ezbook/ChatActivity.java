@@ -13,7 +13,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class ChatActivity extends AppCompatActivity {
 
-    //firbase auth
+    //firebase auth
     FirebaseAuth firebaseAuth;
 
     //views
