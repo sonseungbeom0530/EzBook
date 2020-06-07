@@ -378,26 +378,34 @@ public class ProfileFragment extends Fragment {
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent,IMAGE_PICK_GALLERY_CODE);
     }
-
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);//to show menu option in fragment
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         //inflating menu
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_main,menu);
         menu.findItem(R.id.action_search).setVisible(false);
-        super.onCreateOptionsMenu(menu, inflater);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+    @Override
+
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+
+        int id =item.getItemId();
+
+        if (id==R.id.action_add_post){
+
+            startActivity(new Intent(getActivity(),AddPostActivity.class));
+
+        }
+
+        return super.onOptionsItemSelected(item);
+
     }
 
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        int id =item.getItemId();
-        if (id==R.id.action_add_post){
-            startActivity(new Intent(getActivity(),AddPostActivity.class));
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

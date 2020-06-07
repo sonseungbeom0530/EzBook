@@ -73,7 +73,7 @@
                 </LinearLayout>
             </LinearLayout>
         </RelativeLayout>
-     </ScrollView>
+    </ScrollView>
 
     <!--Floating action button-->
     <com.google.android.material.floatingactionbutton.FloatingActionButton

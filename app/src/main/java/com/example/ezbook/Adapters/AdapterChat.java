@@ -71,11 +71,11 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder>{
         }
         //set seen/delivered status of message
         if(i==chatList.size()-1){
-           if(chatList.get(i).isSeen()){
-               myHolder.isSeenTv.setText("Seen");
-           }else {
-               myHolder.isSeenTv.setText("Delivered");
-           }
+            if(chatList.get(i).isSeen()){
+                myHolder.isSeenTv.setText("Seen");
+            }else {
+                myHolder.isSeenTv.setText("Delivered");
+            }
         }else {
             myHolder.isSeenTv.setVisibility(View.GONE);
         }
@@ -111,7 +111,7 @@ public class AdapterChat extends RecyclerView.Adapter<AdapterChat.MyHolder>{
             profileIv=itemView.findViewById(R.id.profileIv);
             messageTv=itemView.findViewById(R.id.messageTv);
             timeTv=itemView.findViewById(R.id.timeTv);
-           isSeenTv=itemView.findViewById(R.id.isSeenTv);
+            isSeenTv=itemView.findViewById(R.id.isSeenTv);
 
         }
     }
