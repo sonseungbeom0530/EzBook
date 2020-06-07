@@ -20,6 +20,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -272,7 +273,7 @@ public class ProfileFragment extends Fragment {
             break;
             case STORAGE_REQUEST_CODE:{
                 if(grantResults.length>0){
-                    boolean writeStorageAccepted = grantResults[1]==PackageManager.PERMISSION_GRANTED;
+                    boolean writeStorageAccepted = grantResults[0]==PackageManager.PERMISSION_GRANTED;
                     if(writeStorageAccepted){
                         //permissions enabled
                         pickFromGallery();
@@ -377,17 +378,26 @@ public class ProfileFragment extends Fragment {
         galleryIntent.setType("image/*");
         startActivityForResult(galleryIntent,IMAGE_PICK_GALLERY_CODE);
     }
-   /* @Override
+
     public void onCreate(@Nullable Bundle savedInstanceState) {
         setHasOptionsMenu(true);//to show menu option in fragment
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //inflating menu
-        inflater.inflate(R.menu.menu_main,menu);
-        super.onCreateOptionsMenu(menu,inflater);
-    }*/
+        inflater.inflate(R.menu.menu_main, menu);
+        menu.findItem(R.id.action_search).setVisible(false);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id =item.getItemId();
+        if (id==R.id.action_add_post){
+            startActivity(new Intent(getActivity(),AddPostActivity.class));
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

@@ -144,6 +144,7 @@ public class UsersFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         //inflating menu
         inflater.inflate(R.menu.menu_main,menu);
+        menu.findItem(R.id.action_add_post).setVisible(false);
 
         //SearchView
         MenuItem item=menu.findItem(R.id.action_search);

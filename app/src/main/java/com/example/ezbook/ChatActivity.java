@@ -128,7 +128,7 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent =getIntent();
         hisUid=intent.getStringExtra("hisUid");
 
-        //clcik button to send message
+        //click button to send message
         sendBtn.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){//get text from edit text
@@ -158,14 +158,11 @@ public class ChatActivity extends AppCompatActivity {
                         HashMap<String,Object> hasSeenHashMap = new HashMap<>();
                         hasSeenHashMap.put("isSeen",true);
                         ds.getRef().updateChildren(hasSeenHashMap);
-
                     }
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
@@ -189,13 +186,11 @@ public class ChatActivity extends AppCompatActivity {
                     adapterChat.notifyDataSetChanged();
                     //set adapter to recyclerview
                     recyclerView.setAdapter(adapterChat);
-
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
     }
@@ -216,6 +211,41 @@ public class ChatActivity extends AppCompatActivity {
 
         //reset edittext after sending message
         messageEt.setText("");
+
+        //create chatlist node/child in firebase datavase
+        final DatabaseReference chatRef1 =FirebaseDatabase.getInstance().getReference("Chatlist")
+                .child(myUid)
+                .child(hisUid);
+        chatRef1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+                    chatRef1.child("id").setValue(hisUid);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        final DatabaseReference chatRef2 =FirebaseDatabase.getInstance().getReference("Chatlist")
+                .child(hisUid)
+                .child(myUid);
+
+        chatRef2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(!dataSnapshot.exists()){
+                    chatRef2.child("id").setValue(myUid);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     @Override
@@ -242,7 +272,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main,menu);
-        //hide searchvidw
+        //hide searchview
         menu.findItem(R.id.action_search).setVisible(false);
         return super.onCreateOptionsMenu(menu);
     }
