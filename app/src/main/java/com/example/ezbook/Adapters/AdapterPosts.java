@@ -1,6 +1,7 @@
 package com.example.ezbook.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,15 +9,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ezbook.Models.ModelPost;
 import com.example.ezbook.R;
+import com.example.ezbook.ThereProfileActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.Calendar;
@@ -45,7 +49,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     @Override
     public void onBindViewHolder(@NonNull MyHolder myHolder, int i) {
 
-        String uid =postList.get(i).getUid();
+        final String uid =postList.get(i).getUid();
         String uEmail =postList.get(i).getuEmail();
         String uName =postList.get(i).getuName();
         String uDp =postList.get(i).getuDp();
@@ -106,6 +110,17 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 Toast.makeText(context,"Comment",Toast.LENGTH_SHORT).show();
             }
         });
+        myHolder.profileLayout.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                //click to go to ThereProfileActivity with uid, this uid is of clicked user
+                //which will be used to show user specific data/post
+                Intent intent=new Intent(context, ThereProfileActivity.class);
+                intent.putExtra("uid",uid);
+                context.startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -121,6 +136,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         TextView uNameTv,pTimeTv,pTitleTv,pDescriptionTv,pLikeTv;
         ImageButton moreBtn;
         Button likeBtn,commentBtn;
+        LinearLayout profileLayout;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
@@ -136,12 +152,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             moreBtn=itemView.findViewById(R.id.moreBtn);
             likeBtn=itemView.findViewById(R.id.likeBtn);
             commentBtn=itemView.findViewById(R.id.commentBtn);
-
-
-
-
-
-
+            profileLayout=itemView.findViewById(R.id.profileLayout);
 
         }
     }

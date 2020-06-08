@@ -14,9 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -24,9 +28,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ezbook.Adapters.AdapterPosts;
+import com.example.ezbook.Models.ModelPost;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -44,7 +51,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 import static com.google.firebase.storage.FirebaseStorage.getInstance;
@@ -66,6 +75,7 @@ public class ProfileFragment extends Fragment {
     ImageView avatarIv,coverIv;
     TextView nameTv,emailTv,phoneTv;
     FloatingActionButton fab;
+    RecyclerView postsRecyclerView;
 
     //progress dialog
     ProgressDialog pd;
@@ -79,6 +89,10 @@ public class ProfileFragment extends Fragment {
     //arrays of permissions to be required
     String cameraPermission[];
     String storagePermission[];
+
+    List<ModelPost> postList;
+    AdapterPosts adapterPosts;
+    String uid;
 
     //for checking profile or cover photo
     String profileOrCoverPhoto;
@@ -110,11 +124,11 @@ public class ProfileFragment extends Fragment {
         emailTv=view.findViewById(R.id.emailTv);
         phoneTv=view.findViewById(R.id.phoneTv);
         fab=view.findViewById(R.id.fab);
+        postsRecyclerView=view.findViewById(R.id.recyclerview_post);
+
 
         //init progress dialog
         pd = new ProgressDialog(getActivity());
-
-
 
         Query query = databaseReference.orderByChild("email").equalTo(user.getEmail());
         query.addValueEventListener(new ValueEventListener() {
@@ -164,9 +178,100 @@ public class ProfileFragment extends Fragment {
                 showEditProfileDialog();
             }
         });
+        postList=new ArrayList<>();
+
+        checkUserStatus();
+        loadMyPosts();
 
         return view;
     }
+
+    private void loadMyPosts() {
+        //linear layout for recycler view
+        LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
+        //show newest post first, for this from last
+        layoutManager.setStackFromEnd(true);
+        layoutManager.setReverseLayout(true);
+        //set this layout to recyclerview
+        postsRecyclerView.setLayoutManager(layoutManager);
+
+        //init posts list
+        DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Posts");
+        //query to load posts
+        //whenever user publishes a post the uid of this user is also saved as into of post
+        // so we're retrieving post having uid equals to uid of current user
+        Query query=ref.orderByChild("uid").equalTo(uid);
+        //get all data from this ref
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                postList.clear();
+                for(DataSnapshot ds :dataSnapshot.getChildren()){
+                    ModelPost myPosts = ds.getValue(ModelPost.class);
+
+                    //add to value
+                    postList.add(myPosts);
+
+                    //adapter
+                    adapterPosts=new AdapterPosts(getActivity(),postList);
+                    //set this adapter to recyclerview
+                    postsRecyclerView.setAdapter(adapterPosts);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getActivity(),""+databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void searchMyPosts(final String searchQuery) {
+        //linear layout for recycler view
+        LinearLayoutManager layoutManager=new LinearLayoutManager(getActivity());
+        //show newest post first, for this from last
+        layoutManager.setStackFromEnd(true);
+        layoutManager.setReverseLayout(true);
+        //set this layout to recyclerview
+        postsRecyclerView.setLayoutManager(layoutManager);
+
+        //init posts list
+        DatabaseReference ref =FirebaseDatabase.getInstance().getReference("Posts");
+        //query to load posts
+        //whenever user publishes a post the uid of this user is also saved as into of post
+        // so we're retrieving post having uid equals to uid of current user
+        Query query=ref.orderByChild("uid").equalTo(uid);
+        //get all data from this ref
+        query.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                postList.clear();
+                for(DataSnapshot ds :dataSnapshot.getChildren()){
+                    ModelPost myPosts = ds.getValue(ModelPost.class);
+
+                    if(myPosts.getpTitle().toLowerCase().contains(searchQuery.toLowerCase())
+                    ||myPosts.getpDescr().toLowerCase().contains(searchQuery.toLowerCase())){
+                        //add to list
+                        postList.add(myPosts);
+
+                    }
+
+                    //adapter
+                    adapterPosts=new AdapterPosts(getActivity(),postList);
+                    //set this adapter to recyclerview
+                    postsRecyclerView.setAdapter(adapterPosts);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getActivity(),""+databaseError.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private boolean checkStoragePermission(){
         boolean result = ContextCompat.checkSelfPermission(getActivity(),Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 ==(PackageManager.PERMISSION_GRANTED);
@@ -315,7 +420,7 @@ public class ProfileFragment extends Fragment {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
                 while (!uriTask.isSuccessful());
-                Uri downloadUri = uriTask.getResult();
+                final Uri downloadUri = uriTask.getResult();
 
                 //check if image is uploaded or not and uri is received
                 if(uriTask.isSuccessful()){
@@ -343,6 +448,25 @@ public class ProfileFragment extends Fragment {
                             Toast.makeText(getActivity(),"Error Updated Image...",Toast.LENGTH_SHORT).show();
                         }
                     });
+                    //if user edit his name, also chane it form his posts
+                    if(profileOrCoverPhoto.equals("image")){
+                        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Posts");
+                        Query query=ref.orderByChild("uid").equalTo(uid);
+                        query.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for(DataSnapshot ds : dataSnapshot.getChildren()){
+                                    String child = ds.getKey();
+                                    dataSnapshot.getRef().child(child).child("uDp").setValue(downloadUri.toString());
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
 
                 }else {
                     //error
@@ -388,16 +512,47 @@ public class ProfileFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater){
         //inflating menu
         inflater.inflate(R.menu.menu_main,menu);
-        menu.findItem(R.id.action_search).setVisible(false);
+
+        MenuItem item = menu.findItem(R.id.action_search);
+        final SearchView searchView=(SearchView) MenuItemCompat.getActionView(item);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                //called when user press search button
+                if(!TextUtils.isEmpty(s)){
+                    //search
+                    searchMyPosts(s);
+                }else {
+                    loadMyPosts();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                //called whenever user type and letter
+                if(!TextUtils.isEmpty(s)){
+                    //search
+                    searchMyPosts(s);
+                }else {
+                    loadMyPosts();
+                }
+                return false;
+            }
+        });
+
         super.onCreateOptionsMenu(menu,inflater);
     }
     @Override
 
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-
         int id =item.getItemId();
-
+        if(id==R.id.action_logout){
+            firebaseAuth.signOut();
+            checkUserStatus();
+        }
         if (id==R.id.action_add_post){
 
             startActivity(new Intent(getActivity(),AddPostActivity.class));
@@ -407,5 +562,18 @@ public class ProfileFragment extends Fragment {
         return super.onOptionsItemSelected(item);
 
     }
+
+    private void checkUserStatus(){
+        //get current user
+        FirebaseUser user=firebaseAuth.getCurrentUser();
+        if(user!=null){
+            uid=user.getUid();
+        }else {
+            //user not signed in, go to main activity
+            startActivity(new Intent(getActivity(),LoginActivity.class));
+            getActivity().finish();
+        }
+    }
+
 
 }
