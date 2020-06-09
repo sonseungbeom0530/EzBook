@@ -277,6 +277,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         }
     }
+
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
@@ -307,6 +308,12 @@ public class LoginActivity extends AppCompatActivity {
                                 hashMap.put("online", "true");
                                 hashMap.put("image", "");
                                 hashMap.put("cover","");
+                                hashMap.put("city","");
+                                hashMap.put("state","");
+                                hashMap.put("country","");
+                                hashMap.put("address","");
+                                hashMap.put("longitude","");
+                                hashMap.put("latitude","");
                                 //firebase database instance
                                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                                 //path to store user data named "Users"
@@ -350,7 +357,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         //update successfully
-                        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                        checkUserType();
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -364,6 +371,32 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    private void checkUserType() {
+        //if user is admin,start admin main screen
+        //if user is customer,start user main screen
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Users");
+        ref.orderByChild("uid").equalTo(firebaseAuth.getUid())
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds : dataSnapshot.getChildren()){
+                            String accountType=""+ds.child("accountType").getValue();
+                            if(accountType.equals("Admin")){
+                                progressDialog.dismiss();
+                                startActivity(new Intent(LoginActivity.this,AdminMainActivity.class));
+                            }else {
+                                progressDialog.dismiss();
+                                startActivity(new Intent(LoginActivity.this,MainActivity.class));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+    }
 
 
 }

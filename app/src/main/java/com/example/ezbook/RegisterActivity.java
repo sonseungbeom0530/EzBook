@@ -159,7 +159,7 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
 
     }
 
-    private String name,email,password,confirmPassword,phone;
+    private String name,email,password,confirmPassword,phone,country,state,city,address;
 
     private  void inputData(){
         //input data
@@ -168,6 +168,10 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
         password=etPass.getText().toString().trim();
         confirmPassword=etConPass.getText().toString().trim();
         email=etEmail.getText().toString().trim();
+        country=etCountry.getText().toString().trim();
+        state=etState.getText().toString().trim();
+        city=etCity.getText().toString().trim();
+        address=etAddress.getText().toString().trim();
         //validate data
         if (TextUtils.isEmpty(name)){
             Toast.makeText(this,"Enter name",Toast.LENGTH_SHORT).show();
@@ -187,6 +191,10 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
         }
         if (TextUtils.isEmpty(phone)){
             Toast.makeText(this,"Enter phone number",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (latitude==0.0||longitude==0.0){
+            Toast.makeText(this,"Please click GPS button to detect location",Toast.LENGTH_SHORT).show();
             return;
         }
         createAccount();
@@ -238,6 +246,12 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
         hashMap.put("online","true");
         hashMap.put("image","");
         hashMap.put("cover","");
+        hashMap.put("city",city);
+        hashMap.put("state",state);
+        hashMap.put("country",country);
+        hashMap.put("address",address);
+        hashMap.put("longitude",longitude);
+        hashMap.put("latitude",latitude);
         //save to db
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(firebaseAuth.getUid()).setValue(hashMap)
@@ -268,7 +282,7 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
 
                         progressDialog.dismiss();
 
-                        startActivity(new Intent(RegisterActivity.this,MainActivity.class));
+                        startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
 
                         finish();
 
