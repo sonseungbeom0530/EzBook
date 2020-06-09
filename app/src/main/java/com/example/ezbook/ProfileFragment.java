@@ -251,7 +251,7 @@ public class ProfileFragment extends Fragment {
                     ModelPost myPosts = ds.getValue(ModelPost.class);
 
                     if(myPosts.getpTitle().toLowerCase().contains(searchQuery.toLowerCase())
-                    ||myPosts.getpDescr().toLowerCase().contains(searchQuery.toLowerCase())){
+                            ||myPosts.getpDescr().toLowerCase().contains(searchQuery.toLowerCase())){
                         //add to list
                         postList.add(myPosts);
 
