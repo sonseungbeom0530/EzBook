@@ -27,11 +27,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.HashMap;
 
 
-public class UserProfileActivity extends AppCompatActivity {
+public class AdminProfileActivity extends AppCompatActivity {
 
-    TextView tvName, tvPhone, tvPassword, tvEmail, tvAccountType, tvAddress, tvCountry, tvState, tvCity;
+    TextView tvShopName, tvPhone, tvPassword, tvEmail, tvAccountType,tvAddress,tvCountry,tvState,tvCity;
 
-    ImageButton backBtn;
+    ImageButton backBtn,editBtn;
     FirebaseAuth firebaseAuth;
     ProgressDialog progressDialog;
 
@@ -41,35 +41,36 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+        firebaseAuth=FirebaseAuth.getInstance();
 
         tvPhone = findViewById(R.id.tvPhone);
-        tvName = findViewById(R.id.tvName);
+        tvShopName = findViewById(R.id.tvShopName);
         tvPassword = findViewById(R.id.tvPassword);
         tvEmail = findViewById(R.id.tvEmail);
         tvAccountType = findViewById(R.id.tvAccountType);
         tvAddress = findViewById(R.id.tvAddress);
         tvCountry = findViewById(R.id.tvCountry);
-        tvCity = findViewById(R.id.tvCity);
-        tvState = findViewById(R.id.tvState);
+        tvCity=findViewById(R.id.tvCity);
+        tvState=findViewById(R.id.tvState);
 
 
-        backBtn = findViewById(R.id.backBtn);
+        backBtn=findViewById(R.id.backBtn);
+        editBtn=findViewById(R.id.editBtn);
 
-
-        progressDialog = new ProgressDialog(this);
+        progressDialog=new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
         progressDialog.setCanceledOnTouchOutside(false);
 
 
         checkUser();
 
-        backBtn.setOnClickListener(new View.OnClickListener() {
+        backBtn.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
+            public void onClick(View v){
                 onBackPressed();
             }
         });
+
 
 
 
@@ -77,9 +78,9 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private void checkUser() {
         FirebaseUser user = firebaseAuth.getCurrentUser();
-        if (user == null) {
-            startActivity(new Intent(UserProfileActivity.this, LoginActivity.class));
-        } else {
+        if(user==null){
+            startActivity(new Intent (AdminProfileActivity.this,LoginActivity.class));
+        }else{
             loadMyInfo();
         }
     }
@@ -93,7 +94,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds : dataSnapshot.getChildren()){
                             String accountType=""+ds.child("accountType").getValue();
-                            String name=""+ds.child("name").getValue();
+                            String shopName=""+ds.child("name").getValue();
                             String password=""+ds.child("password").getValue();
                             String email=""+ds.child("email").getValue();
                             String phone=""+ds.child("phone").getValue();
@@ -104,7 +105,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
 
-                            tvName.setText(name);
+                            tvShopName.setText(shopName);
                             tvEmail.setText(email);
                             tvPassword.setText(password);
                             tvPhone.setText(phone);
@@ -123,5 +124,5 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
                 });
     }
-    }
 
+}
