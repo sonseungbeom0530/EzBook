@@ -57,7 +57,7 @@
                 android:columnOrderPreserved="false">
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/library_card"
+                    android:id="@+id/addProduct_card"
                     android:layout_width="165dp"
                     android:layout_height="165dp"
                     android:layout_margin="10dp"
@@ -75,13 +75,13 @@
                             android:layout_width="40dp"
                             android:layout_height="40dp"
                             android:layout_marginTop="12dp"
-                            android:src="@drawable/library" />
+                            android:src="@drawable/ic_baseline_add_shopping_cart_24" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
-                            android:text="library"
+                            android:text="Add product"
                             android:textColor="@color/white"
                             android:textSize="16sp" />
 

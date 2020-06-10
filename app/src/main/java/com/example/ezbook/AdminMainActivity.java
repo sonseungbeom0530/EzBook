@@ -57,7 +57,7 @@ public class AdminMainActivity extends AppCompatActivity implements View.OnClick
     DrawerLayout drawerLayout;
     NavigationView navigationView;
     Toolbar toolbar;
-    CardView libraryCard,chatCard,profileCard,logoutCard,findOfflineStoreCard;
+    CardView addProductCard,chatCard,profileCard,logoutCard,findOfflineStoreCard;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +77,7 @@ public class AdminMainActivity extends AppCompatActivity implements View.OnClick
 
 
         //defining card
-        libraryCard=(CardView)findViewById(R.id.library_card);
+        addProductCard=(CardView)findViewById(R.id.addProduct_card);
         chatCard=(CardView)findViewById(R.id.chat_card);
         profileCard=(CardView)findViewById(R.id.profile_card);
         logoutCard=(CardView)findViewById(R.id.logout_card);
@@ -85,7 +85,7 @@ public class AdminMainActivity extends AppCompatActivity implements View.OnClick
 
 
         //Add click listener to the cards
-        libraryCard.setOnClickListener(this);
+        addProductCard.setOnClickListener(this);
         chatCard.setOnClickListener(this);
         profileCard.setOnClickListener(this);
         logoutCard.setOnClickListener(this);
@@ -117,7 +117,7 @@ public class AdminMainActivity extends AppCompatActivity implements View.OnClick
     public void onClick(View v) {
         Intent i;
         switch (v.getId()){
-            case R.id.library_card : i = new Intent(this,LibraryActivity.class);startActivity(i); break;
+            case R.id.addProduct_card : i = new Intent(this,AddProductActivity.class);startActivity(i); break;
             case R.id.profile_card : i = new Intent(this,UserProfileActivity.class);startActivity(i); break;
             case R.id.logout_card : i = new Intent(this,LoginActivity.class);startActivity(i); break;
             case R.id.chat_card : i = new Intent(this,ChatDashboardActivity.class);startActivity(i); break;
