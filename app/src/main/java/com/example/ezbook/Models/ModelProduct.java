@@ -1,4 +1,4 @@
-package com.example.ezbook;
+package com.example.ezbook.Models;
 
 public class ModelProduct {
     private String productId,productTitle,productDescription,productCategory,

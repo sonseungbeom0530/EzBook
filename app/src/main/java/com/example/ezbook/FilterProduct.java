@@ -3,6 +3,7 @@ package com.example.ezbook;
 import android.widget.Filter;
 
 import com.example.ezbook.Adapters.AdapterProductAdmin;
+import com.example.ezbook.Models.ModelProduct;
 
 import java.util.ArrayList;
 
