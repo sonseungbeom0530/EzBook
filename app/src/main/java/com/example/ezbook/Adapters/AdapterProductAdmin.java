@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ezbook.EditProductActivity;
 import com.example.ezbook.FilterProduct;
+import com.example.ezbook.FilterProductUser;
 import com.example.ezbook.Models.ModelProduct;
 import com.example.ezbook.R;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -83,6 +84,8 @@ public class AdapterProductAdmin extends RecyclerView.Adapter<AdapterProductAdmi
         }else {
             holder.discountedPriceTv.setVisibility(View.GONE);
             holder.discountedNoteTv.setVisibility(View.GONE);
+            holder.originalPriceTv.setPaintFlags(0);
+
         }
         try{
             Picasso.get().load(icon).placeholder(R.drawable.ic_shoppingcart_purple).into(holder.productIconIv);

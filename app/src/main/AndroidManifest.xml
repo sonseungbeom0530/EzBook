@@ -25,7 +25,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".UserBookstoreActivity"></activity>
+        <activity android:name=".ShopDetailsActivity"></activity>
+        <activity android:name=".UserBookstoreActivity" />
         <activity android:name=".EditProductActivity" />
         <activity android:name=".AdminBookstoreActivity" />
         <activity android:name=".AddProductActivity" />

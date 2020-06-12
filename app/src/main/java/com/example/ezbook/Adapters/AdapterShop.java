@@ -1,6 +1,7 @@
 package com.example.ezbook.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ezbook.Models.ModelShop;
 import com.example.ezbook.R;
+import com.example.ezbook.ShopDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Array;
@@ -52,7 +54,7 @@ public class AdapterShop extends RecyclerView.Adapter<AdapterShop.HolderShop>{
         String phone=modelShop.getPhone();
         String online=modelShop.getOnline();
         String cover=modelShop.getCover();
-        String uid=modelShop.getUid();
+        final String uid=modelShop.getUid();
         String timeStamp=modelShop.getTimestamp();
         String state=modelShop.getState();
         String image=modelShop.getImage();
@@ -65,6 +67,14 @@ public class AdapterShop extends RecyclerView.Adapter<AdapterShop.HolderShop>{
         }catch (Exception e){
             holder.shopIv.setImageResource(R.drawable.ic_store);
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, ShopDetailsActivity.class);
+                intent.putExtra("shopUid",uid);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
