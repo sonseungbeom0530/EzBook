@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         Intent i;
         switch (v.getId()){
-            case R.id.library_card : i = new Intent(this,LibraryActivity.class);startActivity(i); break;
+            case R.id.library_card : i = new Intent(this,UserBookstoreActivity.class);startActivity(i); break;
             case R.id.profile_card : i = new Intent(this,UserProfileActivity.class);startActivity(i); break;
             case R.id.logout_card : i = new Intent(this,LoginActivity.class);startActivity(i); break;
             case R.id.chat_card : i = new Intent(this,ChatDashboardActivity.class);startActivity(i); break;

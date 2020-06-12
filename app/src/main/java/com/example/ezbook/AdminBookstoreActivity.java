@@ -37,6 +37,7 @@ public class AdminBookstoreActivity extends AppCompatActivity {
     private EditText searchProductEt;
     private ImageButton addProductBtn,filterProductBtn;
     private ImageView profileIv;
+
     private RelativeLayout productsRl,ordersRl;
     private RecyclerView productsRv;
 
@@ -243,12 +244,12 @@ public class AdminBookstoreActivity extends AppCompatActivity {
                             String name=""+ds.child("name").getValue();
                             String accountType=""+ds.child("accountType").getValue();
                             String email=""+ds.child("email").getValue();
-                            String profileImage=""+ds.child("profileImage").getValue();
+                            String image=""+ds.child("image").getValue();
 
                             nameTv.setText(name);
                             emailTv.setText(email);
                             try{
-                                Picasso.get().load(profileImage).placeholder(R.drawable.ic_store).into(profileIv);
+                                Picasso.get().load(image).placeholder(R.drawable.ic_store).into(profileIv);
                             }catch (Exception e){
                                 profileIv.setImageResource(R.drawable.ic_store);
                             }
