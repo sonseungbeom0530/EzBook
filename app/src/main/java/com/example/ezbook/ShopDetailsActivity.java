@@ -49,7 +49,7 @@ import java.util.HashMap;
 public class ShopDetailsActivity extends AppCompatActivity {
 
     private ImageView shopIv;
-    private TextView nameTv,phoneTv,emailTv,addressTv,filteredProductsTv;
+    private TextView nameTv,phoneTv,emailTv,addressTv,filteredProductsTv,cartCountTv;
     private ImageButton callBtn,mapBtn,backBtn,filterProductBtn,cartBtn;
     private EditText searchProductEt;
     private RecyclerView productsRv;
@@ -86,6 +86,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
         filteredProductsTv=findViewById(R.id.filteredProductsTv);
         productsRv=findViewById(R.id.productsRv);
         cartBtn=findViewById(R.id.cartBtn);
+        cartCountTv=findViewById(R.id.cartCountTv);
 
         pd=new ProgressDialog(this);
         pd.setTitle("Please wait");
@@ -102,7 +103,9 @@ public class ShopDetailsActivity extends AppCompatActivity {
         //each shop have its own products and orders so if user add itesm to cart and go back and open cart in differnet shop then cart should be different
         //so delte cart data whenever user open this activity
         deleteCartData();
-        
+
+        cartCount();
+
         searchProductEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -174,6 +177,17 @@ public class ShopDetailsActivity extends AppCompatActivity {
     private void deleteCartData() {
         DataBaseHandler dataBaseHandler=new DataBaseHandler(this);
         dataBaseHandler.deleteAll();
+    }
+
+    public void cartCount(){
+        DataBaseHandler dataBaseHandler=new DataBaseHandler(this);
+        int count=dataBaseHandler.getAllData().getCount();
+        if (count<=0){
+            cartCountTv.setVisibility(View.GONE);
+        }else {
+            cartCountTv.setVisibility(View.VISIBLE);
+            cartCountTv.setText(""+count);//concatenate with string, because i cannt se integer in textview
+        }
     }
 
     public double allTotalPrice=0.00;
@@ -259,6 +273,8 @@ public class ShopDetailsActivity extends AppCompatActivity {
         //for order is and order item
         String cost=allTotalPriceTv.getText().toString().trim().replace("$",""); //remove $ if contains
 
+
+
         //set order data
         HashMap<String,String> hashMap=new HashMap<>();
         hashMap.put("orderId",""+timeStamp);
@@ -267,6 +283,8 @@ public class ShopDetailsActivity extends AppCompatActivity {
         hashMap.put("orderCost",""+cost);
         hashMap.put("orderBy",""+firebaseAuth.getUid());
         hashMap.put("orderTo",""+shopUid);
+        hashMap.put("latitude",""+myLatitude);
+        hashMap.put("longitude",""+myLongitude);
 
         //add to db
         final DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Users").child(shopUid).child("Orders");
@@ -294,6 +312,11 @@ public class ShopDetailsActivity extends AppCompatActivity {
                         pd.dismiss();
                         Toast.makeText(ShopDetailsActivity.this,"Order Place Successfully",Toast.LENGTH_SHORT).show();
 
+                        //after placing order open order details page
+                        Intent intent=new Intent(ShopDetailsActivity.this, OrderDetailsUserActivity.class);
+                        intent.putExtra("orderTo",shopUid);
+                        intent.putExtra("orderId",timeStamp);
+                        startActivity(intent);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

@@ -1,6 +1,7 @@
 package com.example.ezbook.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Layout;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ezbook.Models.ModelOrderUser;
+import com.example.ezbook.OrderDetailsUserActivity;
 import com.example.ezbook.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,12 +46,12 @@ public class AdapterOrderUser extends RecyclerView.Adapter<AdapterOrderUser.Hold
     public void onBindViewHolder(@NonNull HolderOrderUser holder, int position) {
 
         ModelOrderUser modelOrderUser=orderUserList.get(position);
-        String orderId=modelOrderUser.getOrderId();
+        final String orderId=modelOrderUser.getOrderId();
         String orderBy=modelOrderUser.getOrderBy();
         String orderCost=modelOrderUser.getOrderCost();
         String orderStatus=modelOrderUser.getOrderStatus();
-        String orderTime=modelOrderUser.getOrderTime();
-        String orderTo=modelOrderUser.getOrderTo();
+        final String orderTime=modelOrderUser.getOrderTime();
+        final String orderTo=modelOrderUser.getOrderTo();
 
         //get shop info
         loadShopInfo(modelOrderUser,holder);
@@ -70,7 +72,18 @@ public class AdapterOrderUser extends RecyclerView.Adapter<AdapterOrderUser.Hold
         Calendar calendar=Calendar.getInstance();
         calendar.setTimeInMillis(Long.parseLong(orderTime));
         String formatedDate= DateFormat.format("dd/MM/yyyy",calendar).toString();
+
         holder.dateTv.setText(formatedDate);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context, OrderDetailsUserActivity.class);
+                intent.putExtra("orderTo",orderTo);
+                intent.putExtra("orderId",orderId);
+                context.startActivity(intent);
+            }
+        });
     }
 
     private void loadShopInfo(ModelOrderUser modelOrderUser, final HolderOrderUser holder) {

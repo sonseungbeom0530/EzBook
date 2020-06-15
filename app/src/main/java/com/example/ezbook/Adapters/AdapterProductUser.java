@@ -23,6 +23,7 @@ import com.example.ezbook.DataBaseHandler;
 import com.example.ezbook.FilterProductUser;
 import com.example.ezbook.Models.ModelProduct;
 import com.example.ezbook.R;
+import com.example.ezbook.ShopDetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -210,6 +211,8 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
 
         Toast.makeText(context,"added to cart...",Toast.LENGTH_SHORT).show();
 
+        //update cart count
+        ((ShopDetailsActivity)context).cartCount();
     }
 
     @Override
