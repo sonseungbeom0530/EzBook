@@ -2,6 +2,7 @@ package com.example.ezbook;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -46,5 +47,23 @@ public class DataBaseHandler extends SQLiteOpenHelper {
             Log.d(DBTAG,"Record failed");
         }
 
+    }
+    public void deleteItem(Contact contact){
+        SQLiteDatabase sqLiteDatabase=getReadableDatabase();
+        ContentValues contentValues=new ContentValues();
+        contentValues.put("Item_Id",contact.getItem_Id());
+
+        long result=sqLiteDatabase.delete("ITEMS_TABLE","Item_Id=?",new String[]{String.valueOf(contentValues)});
+    }
+    public Cursor getAllData(){
+        SQLiteDatabase sqLiteDatabase=getReadableDatabase();
+        String[] columns=new String[]{"Item_Id","Item_PID","Item_Name","Item_Price_Each","Item_Price","Item_Quantity"};
+        Cursor cursor=sqLiteDatabase.query("ITEMS_TABLE",columns,null,null,null,null,null);
+
+        return cursor;
+    }
+    public void deleteAll(){
+        SQLiteDatabase sqLiteDatabase=getReadableDatabase();
+        sqLiteDatabase.delete("ITEMS_TABLE",null,null);
     }
 }

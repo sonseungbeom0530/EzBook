@@ -7,20 +7,27 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.ColorSpace;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Layout;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ezbook.Adapters.AdapterCartItem;
 import com.example.ezbook.Adapters.AdapterProductAdmin;
 import com.example.ezbook.Adapters.AdapterProductUser;
+import com.example.ezbook.Models.ModelCartItem;
 import com.example.ezbook.Models.ModelProduct;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -51,6 +58,9 @@ public class ShopDetailsActivity extends AppCompatActivity {
     private ArrayList<ModelProduct> productsList;
     private AdapterProductUser adapterProductUser;
 
+    private ArrayList<ModelCartItem> cartItemsList;
+    private AdapterCartItem adapterCartItem;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +87,11 @@ public class ShopDetailsActivity extends AppCompatActivity {
         loadMyInfo();
         loadShopDetails();
         loadShopProducts();
+
+        //each shop have its own products and orders so if user add itesm to cart and go back and open cart in differnet shop then cart should be different
+        //so delte cart data whenever user open this activity
+        deleteCartData();
+        
         searchProductEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -107,7 +122,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
         cartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                showCartDialog();
             }
         });
         callBtn.setOnClickListener(new View.OnClickListener() {
@@ -143,6 +158,65 @@ public class ShopDetailsActivity extends AppCompatActivity {
                         }).show();
             }
         });
+    }
+
+    private void deleteCartData() {
+        DataBaseHandler dataBaseHandler=new DataBaseHandler(this);
+        dataBaseHandler.deleteAll();
+    }
+
+    public double allTotalPrice=0.00;
+    public TextView allTotalPriceTv;
+    private void showCartDialog() {
+        cartItemsList=new ArrayList<>();
+        //inflate cart layout
+        View view = LayoutInflater.from(this).inflate(R.layout.dialog_cart,null);
+        //init views
+        TextView shopNameTv=view.findViewById(R.id.shopNameTv);
+        RecyclerView cartItemRv=view.findViewById(R.id.cartItemRv);
+        allTotalPriceTv=view.findViewById(R.id.TotalTv);
+        Button checkoutBtn=view.findViewById(R.id.checkoutBtn);
+
+        //dialog
+        AlertDialog.Builder builder=new AlertDialog.Builder(this);
+        builder.setView(view);
+
+        shopNameTv.setText(shopName);
+        DataBaseHandler dataBaseHandler=new DataBaseHandler(this);
+        Cursor res=dataBaseHandler.getAllData();
+        while (res.moveToNext()){
+            String id=res.getString(0);
+            String pId=res.getString(1);
+            String name=res.getString(2);
+            String price=res.getString(3);
+            String cost=res.getString(4);
+            String quantity=res.getString(5);
+
+            allTotalPrice=allTotalPrice+Double.parseDouble(cost);
+            ModelCartItem modelCartItem=new ModelCartItem(
+                    ""+id,
+                    ""+pId,
+                    ""+name,
+                    ""+price,
+                    ""+cost,
+                    ""+quantity
+            );
+            cartItemsList.add(modelCartItem);
+
+        }
+        adapterCartItem=new AdapterCartItem(this,cartItemsList);
+        cartItemRv.setAdapter(adapterCartItem);
+        allTotalPriceTv.setText("$"+allTotalPrice);
+        AlertDialog dialog=builder.create();
+        dialog.show();
+
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                allTotalPrice=0.00;
+            }
+        });
+        
     }
 
     private void openMap() {
@@ -186,6 +260,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
                     }
                 });
     }
+
     private void loadShopDetails() {
         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Users");
         ref.child(shopUid).addValueEventListener(new ValueEventListener() {
@@ -218,7 +293,6 @@ public class ShopDetailsActivity extends AppCompatActivity {
             }
         });
     }
-
 
     private void loadShopProducts() {
         productsList=new ArrayList<>();
