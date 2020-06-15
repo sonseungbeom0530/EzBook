@@ -19,8 +19,10 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.ezbook.Adapters.AdapterOrderUser;
 import com.example.ezbook.Adapters.AdapterProductAdmin;
 import com.example.ezbook.Adapters.AdapterShop;
+import com.example.ezbook.Models.ModelOrderUser;
 import com.example.ezbook.Models.ModelProduct;
 import com.example.ezbook.Models.ModelShop;
 import com.google.firebase.auth.FirebaseAuth;
@@ -39,7 +41,7 @@ public class UserBookstoreActivity extends AppCompatActivity {
     private TextView nameTv,emailTv,phoneTv,tabShopsTv,tabOrdersTv,filteredProductsTv;
     private ImageView profileIv;
     private RelativeLayout shopsRl,ordersRl;
-    private RecyclerView shopsRv;
+    private RecyclerView shopsRv,ordersRv;
     private EditText searchProductEt;
 
     private ArrayList<ModelShop> shopsList;
@@ -47,6 +49,9 @@ public class UserBookstoreActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
+
+    private ArrayList<ModelOrderUser> ordersList;
+    private AdapterOrderUser adapterOrderUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,8 +68,7 @@ public class UserBookstoreActivity extends AppCompatActivity {
         ordersRl=findViewById(R.id.ordersRl);
 
         shopsRv=findViewById(R.id.shopsRv);
-
-
+        ordersRv=findViewById(R.id.ordersRv);
 
         progressDialog=new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
@@ -153,6 +157,7 @@ public class UserBookstoreActivity extends AppCompatActivity {
                             }
                             //load only those shops that are in the city of user
                             loadShops(city);
+                            loadOrders();
 
                         }
                     }
@@ -164,7 +169,51 @@ public class UserBookstoreActivity extends AppCompatActivity {
                 });
     }
 
-   private void loadShops(final String myCity) {
+    private void loadOrders() {
+        //init order list
+        ordersList=new ArrayList<>();
+
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Users");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ordersList.clear();
+                for(DataSnapshot ds:dataSnapshot.getChildren()){
+                    String uid=""+ds.getRef().getKey();
+
+                    DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Users").child(uid).child("Orders");
+                    ref.orderByChild("orderBy").equalTo(firebaseAuth.getUid())
+                            .addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()){
+                                        for (DataSnapshot ds:dataSnapshot.getChildren()){
+                                            ModelOrderUser modelOrderUser=ds.getValue(ModelOrderUser.class);
+
+                                            ordersList.add(modelOrderUser);
+                                        }
+                                        adapterOrderUser=new AdapterOrderUser(UserBookstoreActivity.this,ordersList);
+                                        ordersRv.setAdapter(adapterOrderUser);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void loadShops(final String myCity) {
         //init list
         shopsList=new ArrayList<>();
         DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Users");

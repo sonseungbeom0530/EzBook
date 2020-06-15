@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.graphics.ColorSpace;
 import android.net.Uri;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.telecom.PhoneAccountHandle;
 import android.text.Editable;
 import android.text.Layout;
 import android.text.TextWatcher;
@@ -29,6 +31,8 @@ import com.example.ezbook.Adapters.AdapterProductAdmin;
 import com.example.ezbook.Adapters.AdapterProductUser;
 import com.example.ezbook.Models.ModelCartItem;
 import com.example.ezbook.Models.ModelProduct;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -40,6 +44,7 @@ import com.squareup.picasso.Picasso;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ShopDetailsActivity extends AppCompatActivity {
 
@@ -49,10 +54,12 @@ public class ShopDetailsActivity extends AppCompatActivity {
     private EditText searchProductEt;
     private RecyclerView productsRv;
 
+    private ProgressDialog pd;
+
     private String shopUid;
 
     private FirebaseAuth firebaseAuth;
-    private String myLatitude,myLongitude;
+    private String myLatitude,myLongitude,myPhone;
     private String shopName,shopEmail,shopPhone,shopAddress,shopLatitude,shopLongitude;
 
     private ArrayList<ModelProduct> productsList;
@@ -79,6 +86,10 @@ public class ShopDetailsActivity extends AppCompatActivity {
         filteredProductsTv=findViewById(R.id.filteredProductsTv);
         productsRv=findViewById(R.id.productsRv);
         cartBtn=findViewById(R.id.cartBtn);
+
+        pd=new ProgressDialog(this);
+        pd.setTitle("Please wait");
+        pd.setCanceledOnTouchOutside(false);
 
         //get uid of the shop from intent
         shopUid=getIntent().getStringExtra("shopUid");
@@ -216,7 +227,84 @@ public class ShopDetailsActivity extends AppCompatActivity {
                 allTotalPrice=0.00;
             }
         });
+
+        //place order
+        checkoutBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(myLatitude.equals("")||myLatitude.equals("null")||myLongitude.equals("")||myLongitude.equals("null")){
+                    //user didnt enter address in profile
+                    Toast.makeText(ShopDetailsActivity.this,"Please enter your address in you profile before placing order...",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (myPhone.equals("")||myPhone.equals("null")){
+                    Toast.makeText(ShopDetailsActivity.this,"Please enter your phone number in profile before placing order",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (cartItemsList.size()==0){
+                    Toast.makeText(ShopDetailsActivity.this,"No Item in cart",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                submitOrder();
+            }
+        });
         
+    }
+
+    private void submitOrder() {
+        pd.setMessage("Placing order...");
+        pd.show();
+
+        final String timeStamp=""+System.currentTimeMillis();
+        //for order is and order item
+        String cost=allTotalPriceTv.getText().toString().trim().replace("$",""); //remove $ if contains
+
+        //set order data
+        HashMap<String,String> hashMap=new HashMap<>();
+        hashMap.put("orderId",""+timeStamp);
+        hashMap.put("orderTime",""+timeStamp);
+        hashMap.put("orderStatus","In Progress");
+        hashMap.put("orderCost",""+cost);
+        hashMap.put("orderBy",""+firebaseAuth.getUid());
+        hashMap.put("orderTo",""+shopUid);
+
+        //add to db
+        final DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Users").child(shopUid).child("Orders");
+        ref.child(timeStamp).setValue(hashMap)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        for(int i=0;i<cartItemsList.size();i++){
+                            String pId=cartItemsList.get(i).getpId();
+                            String id=cartItemsList.get(i).getId();
+                            String cost=cartItemsList.get(i).getCost();
+                            String name=cartItemsList.get(i).getName();
+                            String price=cartItemsList.get(i).getPrice();
+                            String quantity=cartItemsList.get(i).getQuantity();
+
+                            HashMap<String,String> hashMap1=new HashMap<>();
+                            hashMap1.put("pId",pId);
+                            hashMap1.put("name",name);
+                            hashMap1.put("cost",cost);
+                            hashMap1.put("price",price);
+                            hashMap1.put("quantity",quantity);
+
+                            ref.child(timeStamp).child("Items").child(pId).setValue(hashMap1);
+                        }
+                        pd.dismiss();
+                        Toast.makeText(ShopDetailsActivity.this,"Order Place Successfully",Toast.LENGTH_SHORT).show();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        pd.dismiss();
+                        Toast.makeText(ShopDetailsActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+
     }
 
     private void openMap() {
@@ -245,7 +333,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
                             String accountType=""+ds.child("accountType").getValue();
                             String email=""+ds.child("email").getValue();
                             String image=""+ds.child("image").getValue();
-                            String phone=""+ds.child("phone").getValue();
+                            myPhone=""+ds.child("phone").getValue();
                             String city=""+ds.child("city").getValue();
                             myLatitude=""+ds.child("latitude").getValue();
 
