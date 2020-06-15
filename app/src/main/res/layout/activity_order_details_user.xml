@@ -29,6 +29,14 @@
             android:textColor="@color/white"
             />
 
+        <ImageButton
+            android:id="@+id/writeReviewBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_rate_review_24"/>
+
     </RelativeLayout>
 
     <androidx.cardview.widget.CardView

@@ -25,7 +25,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".OrderDetailsUserActivity"></activity>
+        <activity android:name=".WriteReviewActivity"></activity>
+        <activity android:name=".OrderDetailsUserActivity" />
         <activity
             android:name=".ShopDetailsActivity"
             android:windowSoftInputMode="stateHidden" />
