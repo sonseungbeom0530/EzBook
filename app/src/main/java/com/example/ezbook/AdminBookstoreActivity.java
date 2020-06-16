@@ -18,7 +18,9 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.ezbook.Adapters.AdapterOrderShop;
 import com.example.ezbook.Adapters.AdapterProductAdmin;
+import com.example.ezbook.Models.ModelOrderShop;
 import com.example.ezbook.Models.ModelProduct;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -29,23 +31,27 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class AdminBookstoreActivity extends AppCompatActivity {
 
-    private TextView nameTv,emailTv,tabProductsTv,tabOrdersTv,filteredProductsTv;
+    private TextView nameTv,emailTv,tabProductsTv,tabOrdersTv,filteredProductsTv,filterOrdersTv;
     private EditText searchProductEt;
-    private ImageButton addProductBtn,filterProductBtn;
+    private ImageButton addProductBtn,filterProductBtn,filterOrderBtn;
     private ImageView profileIv;
 
     private RelativeLayout productsRl,ordersRl;
-    private RecyclerView productsRv;
+    private RecyclerView productsRv,ordersRv;
 
     private FirebaseAuth firebaseAuth;
     private ProgressDialog progressDialog;
 
     private ArrayList<ModelProduct> productList;
     private AdapterProductAdmin adapterProductAdmin;
+
+    private ArrayList<ModelOrderShop> orderShopArrayList;
+    private AdapterOrderShop adapterOrderShop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +71,9 @@ public class AdminBookstoreActivity extends AppCompatActivity {
         productsRl=findViewById(R.id.productsRl);
         ordersRl=findViewById(R.id.ordersRl);
         productsRv=findViewById(R.id.productsRv);
+        filterOrdersTv=findViewById(R.id.filterOrdersTv);
+        filterOrderBtn=findViewById(R.id.filterOrderBtn);
+        ordersRv=findViewById(R.id.ordersRv);
 
         progressDialog=new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
@@ -75,6 +84,7 @@ public class AdminBookstoreActivity extends AppCompatActivity {
 
         loadAllProducts();
 
+        loadAllOrders();
         showOrdersUI();
 
         searchProductEt.addTextChangedListener(new TextWatcher() {
@@ -141,7 +151,54 @@ public class AdminBookstoreActivity extends AppCompatActivity {
 
             }
         });
+        filterOrderBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String[] options={"All","In Progress","Completed","Cancelled"};
+                AlertDialog.Builder builder=new AlertDialog.Builder(AdminBookstoreActivity.this);
+                builder.setTitle("Filter Orders")
+                        .setItems(options, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                if(which==0){
+                                    filterOrdersTv.setText("Showing All Orders");
+                                    adapterOrderShop.getFilter().filter("");
+                                }else {
+                                    String optionClicked=options[which];
+                                    filterOrdersTv.setText("Showing "+optionClicked+" Orders");
+                                    adapterOrderShop.getFilter().filter(optionClicked);
+                                }
+                            }
+                        })
+                        .show();
 
+            }
+        });
+
+    }
+
+    private void loadAllOrders() {
+        orderShopArrayList=new ArrayList<>();
+
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(firebaseAuth.getUid()).child("Orders")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        orderShopArrayList.clear();
+                        for(DataSnapshot ds:dataSnapshot.getChildren()){
+                            ModelOrderShop modelOrderShop=ds.getValue(ModelOrderShop.class);
+                            orderShopArrayList.add(modelOrderShop);
+                        }
+                        adapterOrderShop=new AdapterOrderShop(AdminBookstoreActivity.this,orderShopArrayList);
+                        ordersRv.setAdapter(adapterOrderShop);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 
     private void loadFilteredProducts(final String selected) {
