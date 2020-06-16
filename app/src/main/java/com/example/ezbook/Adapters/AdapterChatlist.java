@@ -74,6 +74,7 @@ public class AdapterChatlist extends RecyclerView.Adapter<AdapterChatlist.MyHold
             }
         });
     }
+
     public void setLastMessageHashMap(String userId,String lastMessage){
         lastMessageHashMap.put(userId,lastMessage);
     }
@@ -82,6 +83,7 @@ public class AdapterChatlist extends RecyclerView.Adapter<AdapterChatlist.MyHold
     public int getItemCount() {
         return userList.size();//size of the list
     }
+
 
 
     class MyHolder extends RecyclerView.ViewHolder{

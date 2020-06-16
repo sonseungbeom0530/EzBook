@@ -1,13 +1,14 @@
 package com.example.ezbook.Models;
 
 public class ModelChatlist {
+
     String id;
+
+    public ModelChatlist() {
+    }
 
     public ModelChatlist(String id) {
         this.id = id;
-    }
-
-    public ModelChatlist() {
     }
 
     public String getId() {
