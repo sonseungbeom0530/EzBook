@@ -23,14 +23,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ezbook.Adapters.AdapterCartItem;
 import com.example.ezbook.Adapters.AdapterProductAdmin;
 import com.example.ezbook.Adapters.AdapterProductUser;
+import com.example.ezbook.Adapters.AdapterReview;
 import com.example.ezbook.Models.ModelCartItem;
 import com.example.ezbook.Models.ModelProduct;
+import com.example.ezbook.Models.ModelReview;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,9 +53,10 @@ public class ShopDetailsActivity extends AppCompatActivity {
 
     private ImageView shopIv;
     private TextView nameTv,phoneTv,emailTv,addressTv,filteredProductsTv,cartCountTv;
-    private ImageButton callBtn,mapBtn,backBtn,filterProductBtn,cartBtn;
+    private ImageButton callBtn,mapBtn,backBtn,filterProductBtn,cartBtn,reviewsBtn;
     private EditText searchProductEt;
     private RecyclerView productsRv;
+    private RatingBar ratingBar;
 
     private ProgressDialog pd;
 
@@ -87,6 +91,8 @@ public class ShopDetailsActivity extends AppCompatActivity {
         productsRv=findViewById(R.id.productsRv);
         cartBtn=findViewById(R.id.cartBtn);
         cartCountTv=findViewById(R.id.cartCountTv);
+        reviewsBtn=findViewById(R.id.reviewsBtn);
+        ratingBar=findViewById(R.id.ratingBar);
 
         pd=new ProgressDialog(this);
         pd.setTitle("Please wait");
@@ -99,6 +105,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
         loadMyInfo();
         loadShopDetails();
         loadShopProducts();
+        loadReviews();
 
         //each shop have its own products and orders so if user add itesm to cart and go back and open cart in differnet shop then cart should be different
         //so delte cart data whenever user open this activity
@@ -172,6 +179,39 @@ public class ShopDetailsActivity extends AppCompatActivity {
                         }).show();
             }
         });
+        reviewsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(ShopDetailsActivity.this,ShopReviewsActivity.class);
+                intent.putExtra("shopUid",shopUid);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private float ratingSum=0;
+    private void loadReviews() {
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(shopUid).child("Ratings")
+                .addValueEventListener(new ValueEventListener(){
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot){
+
+                        ratingSum=0;
+                        for (DataSnapshot ds:dataSnapshot.getChildren()){
+                            float rating=Float.parseFloat(""+ds.child("ratings").getValue());
+                            ratingSum=ratingSum+rating;
+                        }
+
+                        long numberOfReview=dataSnapshot.getChildrenCount();
+                        float avgRating=ratingSum/numberOfReview;
+                        ratingBar.setRating(avgRating);
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError){
+
+                    }
+                });
     }
 
     private void deleteCartData() {

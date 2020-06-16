@@ -54,6 +54,19 @@
                 android:text="Email"
                 android:textColor="@color/white"
                 android:layout_margin="3dp"/>
+
+            <RatingBar
+                android:id="@+id/ratingBar"
+                style="@style/Widget.AppCompat.RatingBar.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_alignParentEnd="true"
+                android:numStars="5"
+                android:backgroundTint="#852D2D2D"
+                android:progressTint="@color/white"/>
+
+
             <TextView
                 android:id="@+id/addressTv"
                 android:layout_width="wrap_content"
@@ -126,6 +139,14 @@
             android:layout_alignParentEnd="true"
             android:layout_width="20dp"
             android:layout_height="20dp"/>
+        <ImageButton
+            android:id="@+id/reviewsBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_toStartOf="@id/cartBtn"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:src="@drawable/ic_baseline_star_border_24"/>
 
     </RelativeLayout>
     <RelativeLayout

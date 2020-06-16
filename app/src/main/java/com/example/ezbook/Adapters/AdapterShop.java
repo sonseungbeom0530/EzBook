@@ -15,6 +15,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.ezbook.Models.ModelShop;
 import com.example.ezbook.R;
 import com.example.ezbook.ShopDetailsActivity;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 import java.lang.reflect.Array;
@@ -59,6 +64,8 @@ public class AdapterShop extends RecyclerView.Adapter<AdapterShop.HolderShop>{
         String state=modelShop.getState();
         String image=modelShop.getImage();
 
+        loadReviews(modelShop,holder);
+
         holder.nameTv.setText(name);
         holder.phoneTv.setText(phone);
         holder.addressTv.setText(address);
@@ -75,6 +82,32 @@ public class AdapterShop extends RecyclerView.Adapter<AdapterShop.HolderShop>{
                 context.startActivity(intent);
             }
         });
+    }
+
+    private float ratingSum=0;
+    private void loadReviews(ModelShop modelShop, final HolderShop holder) {
+        String shopUid=modelShop.getUid();
+        DatabaseReference ref= FirebaseDatabase.getInstance().getReference("Users");
+        ref.child(shopUid).child("Ratings")
+                .addValueEventListener(new ValueEventListener(){
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot){
+
+                        ratingSum=0;
+                        for (DataSnapshot ds:dataSnapshot.getChildren()){
+                            float rating=Float.parseFloat(""+ds.child("ratings").getValue());
+                            ratingSum=ratingSum+rating;
+                        }
+
+                        long numberOfReview=dataSnapshot.getChildrenCount();
+                        float avgRating=ratingSum/numberOfReview;
+                        holder.ratingBar.setRating(avgRating);
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError){
+
+                    }
+                });
     }
 
     @Override
