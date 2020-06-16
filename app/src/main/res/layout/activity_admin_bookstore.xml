@@ -22,6 +22,14 @@
             android:layout_margin="2dp"
             android:layout_alignParentEnd="true"/>
 
+        <ImageButton
+            android:id="@+id/reviewsBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_baseline_star_border_24"
+            android:background="@null"
+            android:layout_toStartOf="@id/addProductBtn"/>
+
         <ImageView
             android:id="@+id/profileIv"
             android:layout_width="70dp"

@@ -1,6 +1,7 @@
 package com.example.ezbook.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.provider.ContactsContract;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ezbook.FilterOrderShop;
 import com.example.ezbook.Models.ModelOrderShop;
+import com.example.ezbook.OrderDetailsAdminActivity;
+import com.example.ezbook.OrderDetailsUserActivity;
 import com.example.ezbook.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -50,8 +53,8 @@ public class AdapterOrderShop extends RecyclerView.Adapter<AdapterOrderShop.Hold
     @Override
     public void onBindViewHolder(@NonNull HolderOrderShop holder, int position) {
         ModelOrderShop modelOrderShop=orderShopArrayList.get(position);
-        String orderId=modelOrderShop.getOrderId();
-        String orderBy=modelOrderShop.getOrderBy();
+        final String orderId=modelOrderShop.getOrderId();
+        final String orderBy=modelOrderShop.getOrderBy();
         String orderCost=modelOrderShop.getOrderCost();
         String orderStatus=modelOrderShop.getOrderStatus();
         String orderTime=modelOrderShop.getOrderTime();
@@ -79,7 +82,10 @@ public class AdapterOrderShop extends RecyclerView.Adapter<AdapterOrderShop.Hold
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent=new Intent(context, OrderDetailsAdminActivity.class);
+                intent.putExtra("orderId",orderId);
+                intent.putExtra("orderBy",orderBy);
+                context.startActivity(intent);
             }
         });
 

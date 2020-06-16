@@ -38,7 +38,7 @@ public class AdminBookstoreActivity extends AppCompatActivity {
 
     private TextView nameTv,emailTv,tabProductsTv,tabOrdersTv,filteredProductsTv,filterOrdersTv;
     private EditText searchProductEt;
-    private ImageButton addProductBtn,filterProductBtn,filterOrderBtn;
+    private ImageButton addProductBtn,filterProductBtn,filterOrderBtn,reviewsBtn;
     private ImageView profileIv;
 
     private RelativeLayout productsRl,ordersRl;
@@ -74,6 +74,7 @@ public class AdminBookstoreActivity extends AppCompatActivity {
         filterOrdersTv=findViewById(R.id.filterOrdersTv);
         filterOrderBtn=findViewById(R.id.filterOrderBtn);
         ordersRv=findViewById(R.id.ordersRv);
+        reviewsBtn=findViewById(R.id.reviewsBtn);
 
         progressDialog=new ProgressDialog(this);
         progressDialog.setTitle("Please wait");
@@ -172,6 +173,14 @@ public class AdminBookstoreActivity extends AppCompatActivity {
                         })
                         .show();
 
+             }
+        });
+        reviewsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(AdminBookstoreActivity.this,ShopReviewsActivity.class);
+                intent.putExtra("shopUid",""+firebaseAuth.getUid());
+                startActivity(intent);
             }
         });
 
