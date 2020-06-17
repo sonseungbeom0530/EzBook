@@ -95,7 +95,6 @@ public class AddPostActivity extends AppCompatActivity {
         firebaseAuth=FirebaseAuth.getInstance();
         checkUserStatus();
 
-        actionBar.setSubtitle(email);
 
         userDbRef =FirebaseDatabase.getInstance().getReference("Users");
         Query query=userDbRef.orderByChild("email").equalTo(email);
@@ -118,8 +117,10 @@ public class AddPostActivity extends AppCompatActivity {
         //init views
         titleEt=findViewById(R.id.pTitleEt);
         descriptionEt=findViewById(R.id.pDescriptionEt);
-        imageIv=findViewById(R.id.pImageIv);
+        imageIv=findViewById(R.id.imageIv);
         uploadBtn=findViewById(R.id.pUploadBtn);
+        actionBar.setSubtitle(email);
+
 
         //get image from camera/ gallery on click
         imageIv.setOnClickListener(new View.OnClickListener() {
@@ -407,17 +408,16 @@ public class AddPostActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         //get item id
         int id =item.getItemId();
-        if(id == R.id.action_logout){
-            firebaseAuth.signOut();
-            checkUserStatus();
-        }
+        //if(id == R.id.action_logout){
+        //    firebaseAuth.signOut();
+        //    checkUserStatus();
+        //}
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         //this method is called when user press allow or deny from permission request dialog
         //here we will handle permission cases (allowed and denied)
 
@@ -450,14 +450,13 @@ public class AddPostActivity extends AppCompatActivity {
             }
             break;
         }
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         //this method will be called after picking image from camera or gallery
         if(requestCode==RESULT_OK){
-
             if(requestCode==IMAGE_PICK_GALLERY_CODE){
                 //image is picked from gallery, get uri or image
                 image_rui=data.getData();

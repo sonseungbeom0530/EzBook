@@ -52,7 +52,6 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder>{
             Picasso.get().load(userImage)
                     .placeholder(R.drawable.ic_default_image_white).into(myHolder.mAvatarIv);
         }catch (Exception e){
-
         }
         //handle item click
         myHolder.itemView.setOnClickListener(new View.OnClickListener(){

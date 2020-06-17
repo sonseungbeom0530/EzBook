@@ -258,10 +258,10 @@ public class ThereProfileActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-        if(id==R.id.action_logout){
-            firebaseAuth.signOut();
-            checkUserStatus();
-        }
+        //if(id==R.id.action_logout){
+        //    firebaseAuth.signOut();
+        //    checkUserStatus();
+        //}
         return super.onOptionsItemSelected(item);
     }
 }

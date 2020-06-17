@@ -50,7 +50,6 @@ public class ChatActivity extends AppCompatActivity {
     ImageButton sendBtn;
 
     FirebaseAuth firebaseAuth;
-
     FirebaseDatabase firebaseDatabase;
     DatabaseReference userDbReference;
     //for checking if use has seen message or not
@@ -86,11 +85,18 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
+        /*On clicking user from users list we have passed that user's Uid using intent
+        so get that uid here to get the profile picture, name and start chat with that
+        user
+         */
+        Intent intent =getIntent();
+        hisUid=intent.getStringExtra("hisUid");
 
         //firebase auth instance
         firebaseAuth=FirebaseAuth.getInstance();
         firebaseDatabase=FirebaseDatabase.getInstance();
         userDbReference=firebaseDatabase.getReference("Users");
+
 
         //search user to get that user's info
         Query userQuery = userDbReference.orderByChild("uid").equalTo(hisUid);
@@ -110,7 +116,6 @@ public class ChatActivity extends AppCompatActivity {
                         //image received, set it to imageview in toolbar
                         Picasso.get().load(hisImage).placeholder(R.drawable.ic_default_image_white).into(profileIv);
                     }catch (Exception e){
-                        Picasso.get().load(R.drawable.ic_default_image_white).into(profileIv);
                     }
                 }
             }
@@ -121,12 +126,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        /*On clicking user from users list we have passed that user's Uid using intent
-        so get that uid here to get the profile picture, name and start chat with that
-        user
-         */
-        Intent intent =getIntent();
-        hisUid=intent.getStringExtra("hisUid");
 
         //clcik button to send message
         sendBtn.setOnClickListener(new View.OnClickListener(){
@@ -278,6 +277,8 @@ public class ChatActivity extends AppCompatActivity {
         //hide searchview, add post as i dont needd it here
         menu.findItem(R.id.action_search).setVisible(false);
         menu.findItem(R.id.action_add_post).setVisible(false);
+        //menu.findItem(R.id.action_logout).setVisible(false);
+
         return super.onCreateOptionsMenu(menu);
     }
 
