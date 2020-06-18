@@ -2,7 +2,7 @@ package com.example.ezbook;
 
 import androidx.annotation.NonNull;
 
-import androidx.appcompat.app.ActionBar;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -17,7 +17,6 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 
-import android.util.Log;
 
 import android.util.Patterns;
 

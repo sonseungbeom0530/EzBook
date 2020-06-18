@@ -263,9 +263,7 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
                         //db updated
 
                         progressDialog.dismiss();
-
                         startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-
                         finish();
 
                     }
@@ -279,11 +277,8 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
                     public void onFailure(@NonNull Exception e) {
 
                         //failed updating db
-
                         progressDialog.dismiss();
-
                         startActivity(new Intent(RegisterActivity.this,LoginActivity.class));
-
                         finish();
 
                     }
