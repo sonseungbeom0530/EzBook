@@ -29,11 +29,20 @@
             android:textColor="@color/white"/>
 
         <TextView
+            android:id="@+id/authorTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/titleTv"
+            android:text="Author"
+            android:textColor="@color/white"/>
+        <TextView
         android:id="@+id/pQuantityIv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/titleTv"
+        android:layout_below="@id/authorTv"
         android:layout_marginTop="5dp"
         android:text="Quantity"
         android:textColor="@color/white"/>

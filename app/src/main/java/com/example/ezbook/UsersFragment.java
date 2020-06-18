@@ -1,5 +1,6 @@
 package com.example.ezbook;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -36,7 +37,7 @@ public class UsersFragment extends Fragment {
     RecyclerView recyclerView;
     AdapterUsers adapterUsers;
     List<ModelUser> userList;
-
+    ActionBar actionBar;
     //firebase auth
     FirebaseAuth firebaseAuth;
 

@@ -3,6 +3,10 @@ package com.example.ezbook;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -73,6 +77,7 @@ public class WriteReviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 inputData();
+
             }
         });
 
@@ -90,6 +95,7 @@ public class WriteReviewActivity extends AppCompatActivity {
                 shopNameTv.setText(shopName);
                 try {
                     Picasso.get().load(shopImage).placeholder(R.drawable.ic_store).into(profileIv);
+
                 }catch (Exception e){
                     profileIv.setImageResource(R.drawable.ic_store);
                 }
@@ -145,6 +151,8 @@ public class WriteReviewActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(Void aVoid) {
                         Toast.makeText(WriteReviewActivity.this, "Review published succeddfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(WriteReviewActivity.this,UserBookstoreActivity.class));
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

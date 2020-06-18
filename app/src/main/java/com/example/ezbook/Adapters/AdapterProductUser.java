@@ -64,9 +64,12 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
         String productId=modelProduct.getProductId();
         String timeStamp=modelProduct.getTimeStamp();
         String productIcon=modelProduct.getProductIcon();
+        String author=modelProduct.getAuthor();
 
         //set data
         holder.titleTv.setText(productTitle);
+        holder.authorTv.setText(author);
+
         holder.descriptionTv.setText(productDescription);
         holder.originalPriceTv.setText("$"+originalPrice);
         holder.discountedPriceTv.setText("$"+discountPrice);
@@ -113,6 +116,8 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
         TextView pQuantityIv=view.findViewById(R.id.pQuantityIv);
         TextView descriptionTv=view.findViewById(R.id.descriptionTv);
         TextView discountNoteTv=view.findViewById(R.id.discountNoteTv);
+        TextView authorTv=view.findViewById(R.id.authorTv);
+
         final TextView originalPriceTv=view.findViewById(R.id.originalPriceTv);
         TextView priceDiscountedTv=view.findViewById(R.id.priceDiscountedTv);
         final TextView finalPriceTv=view.findViewById(R.id.finalPriceTv);
@@ -128,6 +133,8 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
         String description=modelProduct.getProductDescription();
         String discountNote=modelProduct.getDiscountNote();
         String image=modelProduct.getProductIcon();
+        String author=modelProduct.getAuthor();
+
 
         final String price;
         if(modelProduct.getDiscountAvailable().equals("true")){
@@ -157,6 +164,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
 
         }
         titleTv.setText(""+title);
+        authorTv.setText(""+author);
         pQuantityIv.setText(""+productQuantity);
         descriptionTv.setText(""+description);
         discountNoteTv.setText(""+discountNote);
@@ -231,7 +239,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
     class HolderProductUser extends RecyclerView.ViewHolder{
 
         private ImageView productIconIv;
-        private TextView discountedNoteTv,titleTv,descriptionTv,addToCartTv,discountedPriceTv,originalPriceTv;
+        private TextView discountedNoteTv,titleTv,descriptionTv,addToCartTv,discountedPriceTv,originalPriceTv,authorTv;
 
         public HolderProductUser(@NonNull View itemView) {
             super(itemView);
@@ -242,6 +250,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
             addToCartTv=itemView.findViewById(R.id.addToCartTv);
             discountedPriceTv=itemView.findViewById(R.id.discountedPriceTv);
             originalPriceTv=itemView.findViewById(R.id.originalPriceTv);
+            authorTv=itemView.findViewById(R.id.authorTv);
 
 
         }

@@ -173,8 +173,16 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
         city=etCity.getText().toString().trim();
         address=etAddress.getText().toString().trim();
         //validate data
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+            Toast.makeText(this,"Invalid email pattern",Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (TextUtils.isEmpty(name)){
             Toast.makeText(this,"Enter name",Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(phone)){
+            Toast.makeText(this,"Enter phone number",Toast.LENGTH_SHORT).show();
             return;
         }
         if (password.length()<6){
@@ -183,14 +191,6 @@ public class RegisterActivity extends AppCompatActivity implements LocationListe
         }
         if (!password.equals(confirmPassword)){
             Toast.makeText(this,"password doesn't match",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            Toast.makeText(this,"Invalid email pattern",Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (TextUtils.isEmpty(phone)){
-            Toast.makeText(this,"Enter phone number",Toast.LENGTH_SHORT).show();
             return;
         }
         if (latitude==0.0||longitude==0.0){

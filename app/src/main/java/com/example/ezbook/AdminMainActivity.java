@@ -55,8 +55,8 @@ public class AdminMainActivity extends AppCompatActivity implements View.OnClick
 
 
     DrawerLayout drawerLayout;
-    NavigationView navigationView;
-    Toolbar toolbar;
+    //NavigationView navigationView;
+    //Toolbar toolbar;
     CardView bookstoreCard,chatCard,profileCard,logoutCard,findOfflineStoreCard;
 
     @Override
@@ -65,15 +65,15 @@ public class AdminMainActivity extends AppCompatActivity implements View.OnClick
         setContentView(R.layout.activity_admin_main);
 
         //Hooks
-        drawerLayout=findViewById(R.id.drawer_layout);
-        navigationView=findViewById(R.id.nav_view);
-        toolbar=findViewById(R.id.toolbar);
+        //drawerLayout=findViewById(R.id.drawer_layout);
+        //navigationView=findViewById(R.id.nav_view);
+        //toolbar=findViewById(R.id.toolbar);
         //toolbar
-        setSupportActionBar(toolbar);
+        //setSupportActionBar(toolbar);
         //Navigation Drawer menu
-        ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        //ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        //drawerLayout.addDrawerListener(toggle);
+        //toggle.syncState();
 
 
         //defining card
@@ -81,7 +81,7 @@ public class AdminMainActivity extends AppCompatActivity implements View.OnClick
         chatCard=(CardView)findViewById(R.id.chat_card);
         profileCard=(CardView)findViewById(R.id.profile_card);
         logoutCard=(CardView)findViewById(R.id.logout_card);
-        findOfflineStoreCard=(CardView)findViewById(R.id.findOfflineStore_card);
+        //findOfflineStoreCard=(CardView)findViewById(R.id.findOfflineStore_card);
 
 
         //Add click listener to the cards
@@ -89,7 +89,7 @@ public class AdminMainActivity extends AppCompatActivity implements View.OnClick
         chatCard.setOnClickListener(this);
         profileCard.setOnClickListener(this);
         logoutCard.setOnClickListener(this);
-        findOfflineStoreCard.setOnClickListener(this);
+        //findOfflineStoreCard.setOnClickListener(this);
 
     }
 
@@ -100,11 +100,12 @@ public class AdminMainActivity extends AppCompatActivity implements View.OnClick
     @Override
 
     public void onBackPressed() {
-        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
-            drawerLayout.closeDrawer(GravityCompat.START);
-        }else{
-            super.onBackPressed();
-        }
+        //if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            //drawerLayout.closeDrawer(GravityCompat.START);
+        //}else{
+            //super.onBackPressed();
+       // }
+        onBackPressed();
     }
 
 

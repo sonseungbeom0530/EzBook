@@ -86,7 +86,6 @@
     </RelativeLayout>
 
     <RelativeLayout
-        android:visibility="gone"
         android:id="@+id/productsRl"
         android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
@@ -138,6 +137,7 @@
 
     <RelativeLayout
         android:id="@+id/ordersRl"
+        android:visibility="gone"
         android:layout_below="@id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

@@ -185,6 +185,7 @@ public class EditProductActivity extends AppCompatActivity {
                         quantityEt.setText(productQuantity);
                         priceEt.setText(originalPrice);
                         discountedPriceEt.setText(discountPrice);
+                        authorEt.setText(author);
 
                         try{
                             Picasso.get().load(productIcon).placeholder(R.drawable.ic_baseline_add_shopping_cart_24).into(productIconIv);
@@ -259,6 +260,7 @@ public class EditProductActivity extends AppCompatActivity {
             hashMap.put("discountPrice",""+discountPrice);
             hashMap.put("discountAvailable",""+discountAvailable);
             hashMap.put("discountNote",""+discountNote);
+            hashMap.put("author",""+author);
 
 
             DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Users");
@@ -298,6 +300,7 @@ public class EditProductActivity extends AppCompatActivity {
                                 hashMap.put("productQuantity",""+productQuantity);
                                 hashMap.put("productIcon",""+downloadImageUri);
                                 hashMap.put("discountNote",""+discountNote);
+                                hashMap.put("author",""+author);
 
                                 hashMap.put("originalPrice",""+originalPrice);
                                 hashMap.put("discountPrice",""+discountPrice);

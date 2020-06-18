@@ -68,7 +68,8 @@ public class OrderDetailsUserActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+                startActivity(new Intent(OrderDetailsUserActivity.this,UserBookstoreActivity.class));
+
             }
         });
 

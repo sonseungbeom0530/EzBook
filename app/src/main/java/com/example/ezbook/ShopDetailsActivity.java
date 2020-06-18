@@ -373,6 +373,8 @@ public class ShopDetailsActivity extends AppCompatActivity {
     private void openMap() {
        // String address="https//:maps.google.com/maps?saddr="+myLatitude+","+myLongitude+"&daddr="+shopLatitude+","+shopLongitude;
         //Intent intent=new Intent(Intent.ACTION_VIEW,Uri.parse(address));
+        //Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
+                //Uri.parse("http://maps.google.com/maps?saddr="+myLatitude+","+myLongitude+"&daddr="+shopLatitude+","+shopLongitude));
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                 Uri.parse("http://maps.google.com/maps?saddr="+myLatitude+","+myLongitude+"&daddr="+shopLatitude+","+shopLongitude));
         startActivity(intent);
@@ -399,7 +401,6 @@ public class ShopDetailsActivity extends AppCompatActivity {
                             myPhone=""+ds.child("phone").getValue();
                             String city=""+ds.child("city").getValue();
                             myLatitude=""+ds.child("latitude").getValue();
-
                             myLongitude=""+ds.child("longitude").getValue();
 
                         }

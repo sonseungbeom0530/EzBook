@@ -75,7 +75,6 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView=findViewById(R.id.chat_recyclerView);
         profileIv=findViewById(R.id.profileIv);
         nameTv=findViewById(R.id.nameTv);
-        userStatusTv=findViewById(R.id.userStatusTv);
         messageEt=findViewById(R.id.messageEt);
         sendBtn=findViewById(R.id.sendBtn);
         //Layout (LinearLayout) for RecyclerView

@@ -67,12 +67,12 @@ public class AdapterProductAdmin extends RecyclerView.Adapter<AdapterProductAdmi
         String icon=modelProduct.getProductIcon();
         String title=modelProduct.getProductTitle();
         String timeStamp=modelProduct.getTimeStamp();
-        String quantity=modelProduct.getProductQuantity();
+        String author=modelProduct.getAuthor();
         String originalPrice=modelProduct.getOriginalPrice();
 
         //set data
         holder.titleTv.setText(title);
-        holder.quantityTv.setText(quantity);
+        holder.authorTv.setText(author);
         holder.discountedNoteTv.setText(discountNote);
         holder.discountedPriceTv.setText("$"+discountPrice);
         holder.originalPriceTv.setText("$"+originalPrice);
@@ -118,7 +118,7 @@ public class AdapterProductAdmin extends RecyclerView.Adapter<AdapterProductAdmi
         TextView titleTv=view.findViewById(R.id.titleTv);
         TextView descriptionTv=view.findViewById(R.id.descriptionTv);
         TextView categoryTv=view.findViewById(R.id.categoryTv);
-        TextView quantityTv=view.findViewById(R.id.quantityTv);
+        TextView authorTv=view.findViewById(R.id.authorTv);
         TextView discountedPriceTv=view.findViewById(R.id.discountPriceTv);
         TextView originalPriceTv=view.findViewById(R.id.originalPriceTv);
 
@@ -133,14 +133,14 @@ public class AdapterProductAdmin extends RecyclerView.Adapter<AdapterProductAdmi
         String icon=modelProduct.getProductIcon();
         final String title=modelProduct.getProductTitle();
         String timeStamp=modelProduct.getTimeStamp();
-        String quantity=modelProduct.getProductQuantity();
+        String author=modelProduct.getAuthor();
         String originalPrice=modelProduct.getOriginalPrice();
 
         //set data
         titleTv.setText(title);
         descriptionTv.setText(productDescription);
         categoryTv.setText(productCategory);
-        quantityTv.setText(quantity);
+        authorTv.setText(author);
         discountNoteTv.setText(discountNote);
         discountedPriceTv.setText("$"+discountPrice);
         originalPriceTv.setText("$"+originalPrice);
@@ -236,7 +236,7 @@ public class AdapterProductAdmin extends RecyclerView.Adapter<AdapterProductAdmi
     class HolderProductAdmin extends RecyclerView.ViewHolder{
 
         private ImageView productIconIv;
-        private TextView discountedNoteTv,titleTv,quantityTv,discountedPriceTv,originalPriceTv;
+        private TextView discountedNoteTv,titleTv,authorTv,discountedPriceTv,originalPriceTv;
 
         public HolderProductAdmin(@NonNull View itemView) {
             super(itemView);
@@ -244,7 +244,7 @@ public class AdapterProductAdmin extends RecyclerView.Adapter<AdapterProductAdmi
             productIconIv=itemView.findViewById(R.id.productIconIv);
             discountedNoteTv=itemView.findViewById(R.id.discountedNoteTv);
             titleTv=itemView.findViewById(R.id.titleTv);
-            quantityTv=itemView.findViewById(R.id.quantityTv);
+            authorTv=itemView.findViewById(R.id.authorTv);
             discountedPriceTv=itemView.findViewById(R.id.discountedPriceTv);
             originalPriceTv=itemView.findViewById(R.id.originalPrice);
 

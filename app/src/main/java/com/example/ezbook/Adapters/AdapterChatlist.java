@@ -60,7 +60,7 @@ public class AdapterChatlist extends RecyclerView.Adapter<AdapterChatlist.MyHold
         try{
             Picasso.get().load(userImage).placeholder(R.drawable.ic_default_img_purple).into(myHolder.profileIv);
         }catch (Exception e){
-            Picasso.get().load(R.drawable.ic_default_img_purple).into(myHolder.profileIv);
+            //Picasso.get().load(R.drawable.ic_default_img_purple).into(myHolder.profileIv);
         }
 
         //handle click of user in chatlist
