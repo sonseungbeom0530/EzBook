@@ -20,6 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".PostDetailActivity"
+            android:theme="@style/AppTheme"></activity>
         <activity android:name=".OrderDetailsAdminActivity" />
         <activity android:name=".ShopReviewsActivity" />
         <activity android:name=".WriteReviewActivity" />
@@ -58,8 +60,6 @@
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".EditUserProfileActivity" />
         <activity android:name=".EditAdminProfileActivity" />
-
-
     </application>
 
 </manifest>
