@@ -3,10 +3,13 @@ package com.example.ezbook;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.ColorSpace;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.format.DateFormat;
@@ -14,6 +17,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -24,6 +28,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ezbook.Adapters.AdapterComments;
+import com.example.ezbook.Models.ModelComments;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,8 +46,10 @@ import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 public class PostDetailActivity extends AppCompatActivity {
@@ -61,6 +69,10 @@ public class PostDetailActivity extends AppCompatActivity {
     ImageButton moreBtn;
     Button likeBtn;
     LinearLayout profileLayout;
+    RecyclerView recyclerView;
+
+    List<ModelComments> commentsList;
+    AdapterComments adapterComments;
 
     //add comments views
     EditText commentEt;
@@ -99,6 +111,7 @@ public class PostDetailActivity extends AppCompatActivity {
         commentEt=findViewById(R.id.commentEt);
         sendBtn=findViewById(R.id.sendBtn);
         cAvatarIv=findViewById(R.id.cAvatarIv);
+        recyclerView=findViewById(R.id.recyclerView);
 
         loadPostInfo();
 
@@ -107,6 +120,8 @@ public class PostDetailActivity extends AppCompatActivity {
         loadUserInfo();
 
         actionBar.setSubtitle("SignedIn as :"+myEmail);
+
+        loadComments();
 
         setLikes();
 
@@ -139,6 +154,34 @@ public class PostDetailActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void loadComments() {
+        LinearLayoutManager layoutManager=new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(layoutManager);
+
+        commentsList=new ArrayList<>();
+
+        DatabaseReference ref=FirebaseDatabase.getInstance().getReference("Posts").child(postId).child("Comments");
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                commentsList.clear();
+                for(DataSnapshot ds:dataSnapshot.getChildren()){
+                    ModelComments modelComments=ds.getValue(ModelComments.class);
+
+                    commentsList.add(modelComments);
+
+                    adapterComments=new AdapterComments(getApplicationContext(),commentsList,myUid,postId);
+                    recyclerView.setAdapter(adapterComments);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void showMoreOptions() {
