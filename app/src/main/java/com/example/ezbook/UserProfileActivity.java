@@ -29,11 +29,11 @@ import java.util.HashMap;
 
 public class UserProfileActivity extends AppCompatActivity {
 
-    TextView tvName, tvPhone, tvPassword, tvEmail, tvAccountType, tvAddress, tvCountry, tvState, tvCity;
+    private TextView tvName, tvPhone, tvPassword, tvEmail, tvAccountType, tvAddress, tvCountry, tvState, tvCity;
 
-    ImageButton backBtn;
-    FirebaseAuth firebaseAuth;
-    ProgressDialog progressDialog;
+    private ImageButton backBtn,editBtn;
+    private FirebaseAuth firebaseAuth;
+    private ProgressDialog progressDialog;
 
 
     @Override
@@ -55,6 +55,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
         backBtn = findViewById(R.id.backBtn);
+        editBtn = findViewById(R.id.editBtn);
 
 
         progressDialog = new ProgressDialog(this);
@@ -70,8 +71,16 @@ public class UserProfileActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        editBtn.setOnClickListener(new View.OnClickListener() {
 
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(UserProfileActivity.this,EditUserProfileActivity.class);
+                startActivity(i);
+                finish();
+            }
 
+        });
 
     }
 

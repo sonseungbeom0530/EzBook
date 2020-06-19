@@ -70,6 +70,13 @@ public class AdminProfileActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+        editBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent i = new Intent(AdminProfileActivity.this,EditAdminProfileActivity.class);
+                startActivity(i);
+            }
+        });
 
 
 
