@@ -302,7 +302,7 @@ public class ShopDetailsActivity extends AppCompatActivity {
                 submitOrder();
             }
         });
-        
+
     }
 
     private void submitOrder() {
@@ -371,10 +371,10 @@ public class ShopDetailsActivity extends AppCompatActivity {
     }
 
     private void openMap() {
-       // String address="https//:maps.google.com/maps?saddr="+myLatitude+","+myLongitude+"&daddr="+shopLatitude+","+shopLongitude;
+        // String address="https//:maps.google.com/maps?saddr="+myLatitude+","+myLongitude+"&daddr="+shopLatitude+","+shopLongitude;
         //Intent intent=new Intent(Intent.ACTION_VIEW,Uri.parse(address));
         //Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
-                //Uri.parse("http://maps.google.com/maps?saddr="+myLatitude+","+myLongitude+"&daddr="+shopLatitude+","+shopLongitude));
+        //Uri.parse("http://maps.google.com/maps?saddr="+myLatitude+","+myLongitude+"&daddr="+shopLatitude+","+shopLongitude));
         Intent intent = new Intent(android.content.Intent.ACTION_VIEW,
                 Uri.parse("http://maps.google.com/maps?saddr="+myLatitude+","+myLongitude+"&daddr="+shopLatitude+","+shopLongitude));
         startActivity(intent);

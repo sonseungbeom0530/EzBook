@@ -235,50 +235,50 @@ public class AddProductActivity extends AppCompatActivity {
             StorageReference storageReference= FirebaseStorage.getInstance().getReference(filePathAndName);
             storageReference.putFile(image_uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        //image uploaded
-                        Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
-                        while (!uriTask.isSuccessful()) ;
-                        Uri downloadImageUri = uriTask.getResult();
-                        if (uriTask.isSuccessful()) {
-                            //uri of image received, upload to db
-                            HashMap<String,Object> hashMap=new HashMap<>();
-                            hashMap.put("productId",""+timeStamp);
-                            hashMap.put("productTitle",""+productTitle);
-                            hashMap.put("productDescription",""+productDescription);
-                            hashMap.put("productCategory",""+productCategory);
-                            hashMap.put("productQuantity",""+productQuantity);
-                            hashMap.put("productIcon",""+downloadImageUri);
-                            hashMap.put("originalPrice",""+originalPrice);
-                            hashMap.put("discountPrice",""+discountPrice);
-                            hashMap.put("discountNote",""+discountNote);
-                            hashMap.put("author",""+author);
-                            hashMap.put("discountAvailable",""+discountAvailable);
-                            hashMap.put("timeStamp",""+timeStamp);
-                            hashMap.put("uid",""+firebaseAuth.getUid());
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            //image uploaded
+                            Task<Uri> uriTask = taskSnapshot.getStorage().getDownloadUrl();
+                            while (!uriTask.isSuccessful()) ;
+                            Uri downloadImageUri = uriTask.getResult();
+                            if (uriTask.isSuccessful()) {
+                                //uri of image received, upload to db
+                                HashMap<String,Object> hashMap=new HashMap<>();
+                                hashMap.put("productId",""+timeStamp);
+                                hashMap.put("productTitle",""+productTitle);
+                                hashMap.put("productDescription",""+productDescription);
+                                hashMap.put("productCategory",""+productCategory);
+                                hashMap.put("productQuantity",""+productQuantity);
+                                hashMap.put("productIcon",""+downloadImageUri);
+                                hashMap.put("originalPrice",""+originalPrice);
+                                hashMap.put("discountPrice",""+discountPrice);
+                                hashMap.put("discountNote",""+discountNote);
+                                hashMap.put("author",""+author);
+                                hashMap.put("discountAvailable",""+discountAvailable);
+                                hashMap.put("timeStamp",""+timeStamp);
+                                hashMap.put("uid",""+firebaseAuth.getUid());
 
-                            //add to db
-                            DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Users");
-                            reference.child(firebaseAuth.getUid()).child("Products").child(timeStamp).setValue(hashMap)
-                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                        @Override
-                                        public void onSuccess(Void aVoid) {
-                                            //added to db
-                                            progressDialog.dismiss();
-                                            Toast.makeText(AddProductActivity.this,"Product added",Toast.LENGTH_SHORT).show();
-                                            clearData();
-                                        }
-                                    })
-                                    .addOnFailureListener(new OnFailureListener() {
-                                        @Override
-                                        public void onFailure(@NonNull Exception e) {
-                                            progressDialog.dismiss();
-                                            Toast.makeText(AddProductActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
+                                //add to db
+                                DatabaseReference reference= FirebaseDatabase.getInstance().getReference("Users");
+                                reference.child(firebaseAuth.getUid()).child("Products").child(timeStamp).setValue(hashMap)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void aVoid) {
+                                                //added to db
+                                                progressDialog.dismiss();
+                                                Toast.makeText(AddProductActivity.this,"Product added",Toast.LENGTH_SHORT).show();
+                                                clearData();
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                progressDialog.dismiss();
+                                                Toast.makeText(AddProductActivity.this,""+e.getMessage(),Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                            }
                         }
-                    }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override

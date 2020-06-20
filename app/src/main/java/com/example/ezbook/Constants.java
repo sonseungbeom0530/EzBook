@@ -4,7 +4,7 @@ public class Constants {
 
     //product categories
     public static final String[] productCategory={
-        "Action and Adventure",
+            "Action and Adventure",
             "Anthology",
             "Classic",
             "Comic and Graphic Novel",

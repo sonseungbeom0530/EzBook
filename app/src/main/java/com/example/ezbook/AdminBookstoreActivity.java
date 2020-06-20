@@ -173,7 +173,7 @@ public class AdminBookstoreActivity extends AppCompatActivity {
                         })
                         .show();
 
-             }
+            }
         });
         reviewsBtn.setOnClickListener(new View.OnClickListener() {
             @Override

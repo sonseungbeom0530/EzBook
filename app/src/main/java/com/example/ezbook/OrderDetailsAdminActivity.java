@@ -154,7 +154,7 @@ public class OrderDetailsAdminActivity extends AppCompatActivity {
                         if (orderStatus.equals("In Progress")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.purple));
                         }else
-                            if (orderStatus.equals("Completed")){
+                        if (orderStatus.equals("Completed")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.green));
                         }else if (orderStatus.equals("Cancelled")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.red));
@@ -164,7 +164,7 @@ public class OrderDetailsAdminActivity extends AppCompatActivity {
                         orderStatusTv.setText(orderStatus);
                         amountTv.setText("$"+orderCost);
                         dateTv.setText(dateFormated);
-                        
+
                         findAddress(latitude,longitude);
 
                     }

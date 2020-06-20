@@ -29,13 +29,13 @@ import java.util.List;
 
 public class ChatListFragment extends Fragment {
 
-   FirebaseAuth firebaseAuth;
-   RecyclerView recyclerView;
-   List<ModelChatlist> chatlistList;
-   List<ModelUser> userList;
-   DatabaseReference reference;
-   FirebaseUser currentUser;
-   AdapterChatlist adapterChatlist;
+    FirebaseAuth firebaseAuth;
+    RecyclerView recyclerView;
+    List<ModelChatlist> chatlistList;
+    List<ModelUser> userList;
+    DatabaseReference reference;
+    FirebaseUser currentUser;
+    AdapterChatlist adapterChatlist;
 
     public ChatListFragment() {
         // Required empty public constructor
@@ -127,8 +127,8 @@ public class ChatListFragment extends Fragment {
                     }
                     if (chat.getReceiver().equals(currentUser.getUid())
                             && chat.getSender().equals(userId) ||
-                    chat.getReceiver().equals(userId) &&
-                    chat.getSender().equals(currentUser.getUid())){
+                            chat.getReceiver().equals(userId) &&
+                                    chat.getSender().equals(currentUser.getUid())){
                         theLastMessage=chat.getMessage();
                     }
                 }

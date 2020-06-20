@@ -107,7 +107,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements Locati
                     //not allowed, request
                     requestLocationPermission();
                 }
-           }
+            }
 
         });
 

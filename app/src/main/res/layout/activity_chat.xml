@@ -68,22 +68,22 @@
         android:background="@color/white"
         android:gravity="center">
 
-    <!--EditText : input message-->
-    <EditText
-        android:id="@+id/messageEt"
-        android:inputType="textCapSentences|textMultiLine"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@null"
-        android:padding="15dp"
-        android:hint="Start typing"
-        android:layout_weight="1"/>
-    <!--Button : send message-->
-    <ImageButton
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:id="@+id/sendBtn"
-        android:background="@null"
-        android:src="@drawable/ic_send"/>
+        <!--EditText : input message-->
+        <EditText
+            android:id="@+id/messageEt"
+            android:inputType="textCapSentences|textMultiLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:padding="15dp"
+            android:hint="Start typing"
+            android:layout_weight="1"/>
+        <!--Button : send message-->
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/sendBtn"
+            android:background="@null"
+            android:src="@drawable/ic_send"/>
     </LinearLayout>
 </RelativeLayout>

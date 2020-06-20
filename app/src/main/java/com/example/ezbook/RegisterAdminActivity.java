@@ -245,10 +245,10 @@ public class RegisterAdminActivity extends AppCompatActivity implements Location
     }
 
     private boolean checkLocationPermissions(){
-      boolean result= ContextCompat.checkSelfPermission(this,
-              Manifest.permission.ACCESS_FINE_LOCATION)
-              ==(PackageManager.PERMISSION_GRANTED);
-      return result;
+        boolean result= ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                ==(PackageManager.PERMISSION_GRANTED);
+        return result;
     }
 
     private void requestLocationPermission(){
@@ -271,9 +271,9 @@ public class RegisterAdminActivity extends AppCompatActivity implements Location
         geocoder=new Geocoder(this, Locale.getDefault());
 
         try{
-           addresses=geocoder.getFromLocation(latitude, longitude, 1);
+            addresses=geocoder.getFromLocation(latitude, longitude, 1);
 
-           String address =addresses.get(0).getAddressLine(0); //compelte address
+            String address =addresses.get(0).getAddressLine(0); //compelte address
             String city=addresses.get(0).getLocality();
             String state=addresses.get(0).getAdminArea();
             String country=addresses.get(0).getCountryName();

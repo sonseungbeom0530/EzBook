@@ -14,7 +14,7 @@
         android:layout_width="wrap_content"
         android:orientation="horizontal"
         android:layout_height="wrap_content">
-        
+
         <ImageView
             android:id="@+id/avatarIv"
             android:src="@drawable/ic_users_black"
@@ -40,7 +40,7 @@
                 android:text="Person email"/>
         </LinearLayout>
 
-        
+
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

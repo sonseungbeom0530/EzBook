@@ -219,27 +219,27 @@ public class UserBookstoreActivity extends AppCompatActivity {
         DatabaseReference reference=FirebaseDatabase.getInstance().getReference("Users");
         reference.orderByChild("accountType").equalTo("Admin")
                 .addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                shopsList.clear();
-                for (DataSnapshot ds: dataSnapshot.getChildren()){
-                    ModelShop modelShop=ds.getValue(ModelShop.class);
-                    String shopCity=""+ds.child("city").getValue();
-                    //show only user city shops
-                    if (shopCity.equals(myCity)){
-                        shopsList.add(modelShop);
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        shopsList.clear();
+                        for (DataSnapshot ds: dataSnapshot.getChildren()){
+                            ModelShop modelShop=ds.getValue(ModelShop.class);
+                            String shopCity=""+ds.child("city").getValue();
+                            //show only user city shops
+                            if (shopCity.equals(myCity)){
+                                shopsList.add(modelShop);
+                            }
+                        }
+                        //setup adapter
+                        adapterShop=new AdapterShop(UserBookstoreActivity.this,shopsList);
+                        shopsRv.setAdapter(adapterShop);
                     }
-                }
-                //setup adapter
-                adapterShop=new AdapterShop(UserBookstoreActivity.this,shopsList);
-                 shopsRv.setAdapter(adapterShop);
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-            }
-        });
+                    }
+                });
 
     }
 

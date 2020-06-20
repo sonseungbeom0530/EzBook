@@ -7,7 +7,7 @@
     android:layout_marginBottom="2dp"
     app:contentPadding="5dp"
     >
-    
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

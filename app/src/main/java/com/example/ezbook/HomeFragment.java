@@ -74,7 +74,7 @@ public class HomeFragment extends Fragment {
 
         //init post list
         postList=new ArrayList<>();
-        
+
         loadPosts();
 
         return view;

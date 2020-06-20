@@ -96,7 +96,7 @@
                     android:layout_marginStart="5dp"
                     android:src="@drawable/ic_baseline_map_24"
                     android:background="@null"/>
-                
+
             </LinearLayout>
         </RelativeLayout>
 

@@ -550,8 +550,8 @@ public class PostDetailActivity extends AppCompatActivity {
         //get item id
         int id=item.getItemId();
         //if(id==R.id.action_logout){
-           // FirebaseAuth.getInstance().signOut();
-            //checkUserStatus();
+        // FirebaseAuth.getInstance().signOut();
+        //checkUserStatus();
         //}
         return super.onOptionsItemSelected(item);
     }

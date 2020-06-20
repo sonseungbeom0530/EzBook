@@ -23,12 +23,12 @@
             android:background="@null"/>
     </RelativeLayout>
 
-   <RelativeLayout
-       android:layout_width="match_parent"
-       android:layout_height="match_parent"
-       android:gravity="center">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center">
 
-    <LinearLayout
+        <LinearLayout
             android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -115,52 +115,52 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textSize="14dp" />
-        <LinearLayout
-            android:id="@+id/addressLayout"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/addressLayout"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <EditText
-                android:id="@+id/etCountry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="5dp"
-                android:background="@drawable/edittext_background"
-                android:hint="country"
-                android:layout_weight="1"
-                android:inputType="textPostalAddress"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="14dp" />
-            <EditText
-                android:id="@+id/etState"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edittext_background"
-                android:hint="state"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:inputType="textPostalAddress"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="14dp" />
-            <EditText
-                android:id="@+id/etCity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edittext_background"
-                android:hint="city"
-                android:layout_weight="1"
-                android:inputType="textPostalAddress"
-                android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="14dp" />
+                <EditText
+                    android:id="@+id/etCountry"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@drawable/edittext_background"
+                    android:hint="country"
+                    android:layout_weight="1"
+                    android:inputType="textPostalAddress"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="14dp" />
+                <EditText
+                    android:id="@+id/etState"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_background"
+                    android:hint="state"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:inputType="textPostalAddress"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="14dp" />
+                <EditText
+                    android:id="@+id/etCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/edittext_background"
+                    android:hint="city"
+                    android:layout_weight="1"
+                    android:inputType="textPostalAddress"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textSize="14dp" />
 
-        </LinearLayout>
+            </LinearLayout>
 
 
             <Button
@@ -186,5 +186,5 @@
                 android:text="Are you a Admin? Register as Admin"
                 android:textColor="@color/white" />
         </LinearLayout>
-   </RelativeLayout>
+    </RelativeLayout>
 </RelativeLayout>

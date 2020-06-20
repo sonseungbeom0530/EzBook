@@ -61,7 +61,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
         //load shop info
         loadShopInfo();
-        
+
         //if user has written review to this shop, load it
         loadMyReview();
 

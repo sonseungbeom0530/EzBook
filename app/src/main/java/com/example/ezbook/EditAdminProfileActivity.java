@@ -89,7 +89,7 @@ public class EditAdminProfileActivity extends AppCompatActivity implements Locat
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               inputData();
+                inputData();
             }
         });
         gpsBtn.setOnClickListener(new View.OnClickListener(){

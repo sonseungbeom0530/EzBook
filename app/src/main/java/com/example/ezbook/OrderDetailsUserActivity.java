@@ -64,7 +64,7 @@ public class OrderDetailsUserActivity extends AppCompatActivity {
         loadShopInfo();
         loadOrderDetails();
         loadOrderedItems();
-        
+
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +130,7 @@ public class OrderDetailsUserActivity extends AppCompatActivity {
                         Calendar calendar=Calendar.getInstance();
                         calendar.setTimeInMillis(Long.parseLong(orderTime));
                         String formatedDate= DateFormat.format("dd/MM/yyyy hh:mm a",calendar).toString();
-                        
+
                         if (orderStatus.equals("In Progress")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.colorPrimary));
                         }else if (orderStatus.equals("Completed")){
@@ -138,7 +138,7 @@ public class OrderDetailsUserActivity extends AppCompatActivity {
                         }else if (orderStatus.equals("Cancelled")){
                             orderStatusTv.setTextColor(getResources().getColor(R.color.red));
                         }
-                        
+
                         orderIdTv.setText(orderId);
                         orderStatusTv.setText(orderStatus);
                         amountTv.setText("$"+orderCost);
@@ -186,7 +186,7 @@ public class OrderDetailsUserActivity extends AppCompatActivity {
             String address =addresses.get(0).getAddressLine(0);
             addressTv.setText(address);
         }catch (Exception e){
-            
+
         }
     }
 

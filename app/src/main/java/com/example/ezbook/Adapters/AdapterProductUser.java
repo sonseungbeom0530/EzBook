@@ -51,7 +51,7 @@ public class AdapterProductUser extends RecyclerView.Adapter<AdapterProductUser.
 
     @Override
     public void onBindViewHolder(@NonNull HolderProductUser holder, int position) {
-            //get data
+        //get data
         final ModelProduct modelProduct=productsList.get(position);
         String discountAvailable=modelProduct.getDiscountAvailable();
         String discountNote=modelProduct.getDiscountNote();
